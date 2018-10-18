@@ -1,0 +1,24 @@
+{
+    "name": "ataworks/framework",
+    "description": "PHP Framework for ataworks applications.",
+    "keywords": ["framework","ataworks","php","mvc"],
+    "license": "MIT",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Emrullah Tanıma",
+            "email": "emrtnm@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.1.0",
+        "ext-mbstring": "*",
+        "ext-openssl": "*",
+        "ext-pdo": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ataworks\\": "src/"
+        }
+    }
+}
