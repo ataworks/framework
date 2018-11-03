@@ -51,7 +51,7 @@ class Curl implements ICurl
      */
     public function option(String $key, $value)
     {
-        $this->options[constant("CURLOPT_".upper($key))] = $value;
+        $this->options[constant("CURLOPT_".mb_strtoupper($key))] = $value;
         return $this;
     }
 
@@ -97,7 +97,7 @@ class Curl implements ICurl
     public function info(String $key = null)
     {
         if ($key === null) return curl_getinfo($this->init);
-        return curl_getinfo($this->init, constant("CURLINFO_".upper($key)));
+        return curl_getinfo($this->init, constant("CURLINFO_".mb_strtoupper($key)));
     }
 
     /**
