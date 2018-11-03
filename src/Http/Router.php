@@ -102,9 +102,6 @@ final class Router implements IRouter
     private function run(Array $params = [])
     {
         if (isset($params)) {
-            /* Get config */
-            $Config = CONFIG;
-
             /* Set controller */
             $cont_file = $this->type.mb_strtolower($params['cont']).".php";
 
@@ -114,17 +111,12 @@ final class Router implements IRouter
             /* Set controller */
             $controller = $params['cont'];
 
-            /* Set controller type and language file */
+            /* Set controller type */
             if ($this->type == CONTROLLERS) {
                 $controller    = "\Frontend\\Controllers\\$controller";
-                $contLangFile  = LANG_DIR.$Config['lang']['site'].'/'.$params['cont'].'.php';
             } else {
                 $controller = "\Backend\\Controllers\\$controller";
-                $contLangFile = ADMIN_LANG_DIR.$Config['lang']['admin'].'/'.$params['cont'].'.php';
             }
-
-            /* Check controller language file and import */
-            if (file_exists($contLangFile)) require $contLangFile;
 
             /* Start controller */
             $this->route["cont"] = Registry::set($controller, new $controller());

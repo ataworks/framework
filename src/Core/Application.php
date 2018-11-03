@@ -62,13 +62,13 @@ class Application
 
         if (is_admin_folder()) {
             /* Load common language files for admin */
-            load_lang_files(ADMIN_LANG_DIR.$Config['lang']['admin'].'/common/');
+            load_lang_files(ADMIN_LANG_DIR.$Config['lang']['admin'].'/');
 
             /* Twig loader */
             $loader = new \Twig_Loader_Filesystem(ADMIN_VIEW);
         } else {
             /* Load common language files */
-            load_lang_files(LANG_DIR.$Config['lang']['site'].'/common/');
+            load_lang_files(LANG_DIR.$Config['lang']['site'].'/');
 
             /* Twig loader */
             $loader = new \Twig_Loader_Filesystem($Config['theme'], VIEW);
