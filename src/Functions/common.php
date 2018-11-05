@@ -341,24 +341,25 @@ if (!function_exists('remove_dir'))
     /**
      * Remove dir
      *
-     * @param  string  $dirPath
+     * @param  string  $dir
      */
-    function remove_dir($dirPath) {
-        if (! is_dir($dirPath)) {
-            throw new \InvalidArgumentException("$dirPath must be a directory");
-        }
-        if (substr($dirPath, strlen($dirPath) - 1, 1) != '/') {
-            $dirPath .= '/';
-        }
-        $files = glob($dirPath . '*', GLOB_MARK);
-        foreach ($files as $file) {
-            if (is_dir($file)) {
-                remove_dir($file);
-            } else {
-                unlink($file);
+    function remove_dir($dir)
+    {
+        if (is_dir($dir)) {
+            $objects = scandir($dir);
+            foreach ($objects as $object)
+            {
+                if ($object != "." && $object != "..")
+                {
+                    if (is_dir($dir. "/" . $object)) {
+                        remove_dir($dir . "/" . $object);
+                    } else {
+                        unlink($dir . "/" . $object);
+                    }
+                }
             }
+            rmdir($dir);
         }
-        rmdir($dirPath);
     }
 }
 
