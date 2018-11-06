@@ -130,12 +130,13 @@ class Hooks implements IHooks
 
             /* Json open */
             $file = file_get_contents($json);
-            
-            /* Plugin json content get and edit */
-            $data = Json::decodeArray($file);
-            $data['status'] = $status;
+            $pStatus = Json::decodeArray($file)['status'];
 
-            file_put_contents($json, Json::encode($data)); 
+            /* Replace */
+            $file = str_replace('"status":"'.$pStatus.'"', '"status":"'.$status.'"', $file);
+
+            /* File put contents */
+            file_put_contents($json, $file);
         }
     }
 
