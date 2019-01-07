@@ -392,3 +392,47 @@ if (!function_exists('prev_url'))
         return htmlspecialchars($_SERVER['HTTP_REFERER']);
     }
 }
+
+if (!function_exists('is_ssl'))
+{
+    /**
+     * Check ssl certified
+     *
+     * @return boolean
+     */
+    function is_ssl()
+    {
+        if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != 'on') {
+            return false;
+        }
+        return true;
+    }
+}
+
+if (!function_exists('is_phone'))
+{
+    /**
+     * Check phone number for turkey.
+     * Note: at the beginning without zero.
+     *
+     * @example is_phone('507 000 00 00') or is_phone('507000000')
+     * @param int $number
+     * @return boolean
+     */
+    function is_phone($number)
+    {
+        /* Parse blanks */
+        $number = str_replace(' ', '', $number);
+
+        /* Check numeric */
+        if (!is_numeric($number)) return false;
+
+        /* Check strlen */
+        if (strlen($number) != 10) return false;
+
+        /* Check valid number */
+        if ($number <= 5050000000 || $number >= 5499999999) return false;
+
+        return true;
+    }
+}
