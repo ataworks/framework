@@ -65,17 +65,17 @@ class Application
             load_lang_files(ADMIN_LANG_DIR.$Config['lang']['admin'].'/');
 
             /* Twig loader */
-            $loader = new \Twig_Loader_Filesystem(ADMIN_VIEW);
+            $loader = new \Twig\Loader\FilesystemLoader(ADMIN_VIEW);
         } else {
             /* Load common language files */
             load_lang_files(LANG_DIR.$Config['lang']['site'].'/');
 
             /* Twig loader */
-            $loader = new \Twig_Loader_Filesystem($Config['theme'], VIEW);
+            $loader = new \Twig\Loader\FilesystemLoader($Config['theme'], VIEW);
         }
 
         /* Start twig */
-        $twig   = Registry::set("Twig", new \Twig_Environment($loader, $twigConfig));
+        $twig   = Registry::set("Twig", new \Twig\Environment($loader, $twigConfig));
 
         /* Start twig functions */
         $functions = new \App\Functions\TwigFunctions();
