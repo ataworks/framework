@@ -83,26 +83,19 @@ class Paginator implements IPaginator
     /**
      * Create content and return content.
      *
-     * @param  int    $pages
+     * @param  int    $totalElement
      * @param  int    $active
      * @param  string $url
      * @return mixed
      */
-    public static function getContent(Int $pages, Int $active, String $url)
+    public static function getContent(Int $totalElement, Int $active, String $url)
     {
-        if ($pages > 1) {
-
-            /* Check active page */
-            if ($active == 1) {
-                $f_class = "active";
-            } else {
-                $f_class = "";
-            }
-
+        /* Check page number */
+        if (ceil($totalElement / self::$limit) > 1) {
             /* Start create content */
             $content = "
             <li>
-              <a class=\"$f_class\" href=\"$url\" title=\"".__('first_page')."\">
+              <a href=\"$url\" title=\"".__('first_page')."\">
                 <i class=\"fas fa-step-backward\"></i>
               </a>
             </li>";
@@ -113,14 +106,16 @@ class Paginator implements IPaginator
              * Loops up to the number of pages.
              * And append to content. 
              */
-            foreach (self::getPageNumbers($pages, $active) as $row)
+            foreach (self::getPageNumbers($totalElement, $active) as $row)
             {
+                /* Check page active */
                 if ($row == $active) {
                     $class = "active";
                 } else {
                     $class = "";
                 }
 
+                /* Add to content */
                 $content .= "
                 <li>
                   <a class=\"$class\" href=\"$url&page=$row\" title=\"".__('page')." $row\">
@@ -130,17 +125,10 @@ class Paginator implements IPaginator
                 $class = "";
             }
 
-            /* Check active page */
-            if ($active == $pages) {
-                $l_class = "active";
-            } else {
-                $l_class = "";
-            }
-
             /* Add last page to content */
             $content .= "
             <li>
-              <a class=\"$l_class\" href=\"$url&page=$pages\" title=\"".__('last_page')."\">
+              <a href=\"$url&page=".ceil($totalElement / self::$limit)."\" title=\"".__('last_page')."\">
                 <i class=\"fas fa-step-forward\"></i>
               </a>
             </li>";
@@ -175,8 +163,9 @@ class Paginator implements IPaginator
 
         /* Set adjacents link */
         $adj = self::$adjacents;
-
-        if (isset($pages, self::$limit) === true) {
+        
+        if (isset($pages, self::$limit) === true)
+        {
             $data = range(1, ceil($pages / self::$limit));
 
             if (isset($current, $adj) === true) {
