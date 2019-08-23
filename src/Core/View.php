@@ -43,8 +43,6 @@ class View implements IView
         }
 
         /* Default data */
-        global $_;
-        $data['lang']       = $_;
         $data['CDNStyles']  = CDN::styles();
         $data['CDNScripts'] = CDN::scripts();
 
