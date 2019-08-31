@@ -25,7 +25,6 @@ class CDN implements ICDN
         'morris'       => 'https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css',
         'datepicker'   => 'https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css',
         'morris'       => 'https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css',
-        'sweetalert'   =>  PUBLIC_URI.'css/sweetalert.min.css',
         'lightbox'     =>  PUBLIC_URI.'css/lightbox.min.css',
         'prism'        =>  PUBLIC_URI.'css/prism.css'
     ];
