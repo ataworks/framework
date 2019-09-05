@@ -29,13 +29,13 @@ if (!function_exists('lang_name'))
     function lang_name($name)
     {
         switch ($name) {
-            case 'turkish':
+            case 'tr':
                 return 'Türkçe';
                 break;
-            case 'english':
+            case 'eb':
                 return 'English';
                 break;
-            case 'german':
+            case 'de':
                 return 'Deutsch';
                 break;
             default:
