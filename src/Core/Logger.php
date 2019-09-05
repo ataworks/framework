@@ -60,6 +60,9 @@ class Logger implements ILogger
      */
     public static function addErrorLog($code, String $msg, String $filePath, Int $line)
     {
+        /* Get config */
+        $Config = CONFIG;
+        
         /* Keep error log file */
         $file = self::$path.'error.log';
 
@@ -69,10 +72,13 @@ class Logger implements ILogger
         /* Create log message */
         $logMessage = date(self::$timeFormat).' '.self::$levels[$code].": message => $msg file $filePath line => $line url => $url\r\n";
         
-        if (file_exists($file)) {
-            return self::filePuts($file, $logMessage);
+        /* Check error report status */
+        if ($Config['error_report'] == 'on') {
+            if (file_exists($file)) {
+                return self::filePuts($file, $logMessage);
+            }
+            return self::fileWrite($file, $logMessage);
         }
-        return self::fileWrite($file, $logMessage);
     }
 
     /**
