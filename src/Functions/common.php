@@ -363,6 +363,33 @@ if (!function_exists('remove_dir'))
     }
 }
 
+if (!function_exists('copy_dir'))
+{
+    /**
+     * Copy directory
+     *
+     * @param string $src
+     * @param string $dst
+     */
+    function copy_dir($src, $dst)
+    {
+        if (file_exists($dst)) rmdir($dst);
+        if (is_dir($src)) {
+            mkdir($dst);
+            $files = scandir($src);
+            foreach ($files as $file)
+            {
+                if ($file != "." && $file != "..")
+                {
+                    copy_dir("$src/$file", "$dst/$file");
+                }
+            }
+        } else if (file_exists($src)) {
+             copy($src, $dst);
+        }
+    }
+}
+
 if (!function_exists('is_email'))
 {
     /**
