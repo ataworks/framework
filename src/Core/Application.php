@@ -67,8 +67,17 @@ class Application
             /* Twig loader */
             $loader = new \Twig\Loader\FilesystemLoader(ADMIN_VIEW);
         } else {
+            /* Convert site lang id to lang code */
+            $lang = Registry::get("Ataworks\Core\Db")
+                ->setLog(false)
+                ->cache(true, 3600)
+                ->selectUniq('languages', 'code', 'id = ?', $Config['lang']['site']);
+
+            /* Set lang code */
+            $lang = $lang['code'];
+
             /* Load common language files */
-            load_lang_files(LANG_DIR.$Config['lang']['site'].'/');
+            load_lang_files(LANG_DIR.$lang.'/');
 
             /* Twig loader */
             $loader = new \Twig\Loader\FilesystemLoader($Config['theme'], VIEW);

@@ -20,6 +20,13 @@ abstract class Model
     protected $db;
 
     /**
+     * Keep database prefix
+     *
+     * @var string $prefix
+     */
+    protected $prefix;
+
+    /**
      * Set database object.
      *
      * @return void
@@ -28,5 +35,8 @@ abstract class Model
     {
         /* Set instance */
         $this->db = Registry::get('Ataworks\Core\Db');
+
+        /* Set prefix */
+        $this->prefix = DB_PREFIX;
     }
 }
