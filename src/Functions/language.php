@@ -32,7 +32,7 @@ if (!function_exists('lang_name'))
             case 'tr':
                 return 'Türkçe';
                 break;
-            case 'eb':
+            case 'en':
                 return 'English';
                 break;
             case 'de':
