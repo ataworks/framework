@@ -101,10 +101,10 @@ class Db extends PDO implements IDb
         } catch(PDOException $e) {
 
             /* Database connect error message */
-            $error=("<br/><div style='text-align:center'>" 
-            . "<span style='padding: 5px; border: 1px solid red; background:#fce0e0;" 
-            . "font-family: Verdana; color:red; font-size: 11px; margin:0 auto'>" 
-            . "<b>Database Error: </b>" . $dbname . " database connection failed!</span></div>");
+            $error=("<br/><div style='text-align:center'>"
+                . "<span style='padding: 5px; border: 1px solid red; background:#fce0e0;"
+                . "font-family: Verdana; color:red; font-size: 11px; margin:0 auto'>"
+                . "<b>Database Error: </b>" . $dbname . " database connection failed!</span></div>");
             exit($error);
         }
 
@@ -117,7 +117,7 @@ class Db extends PDO implements IDb
 
     /**
      * Add new data to database.
-     * 
+     *
      * @param  string $table
      * @param  string $cols
      * @param  mixed  $values
@@ -159,7 +159,7 @@ class Db extends PDO implements IDb
         /* Convert cols and values */
         $this->cols   = $this->convertCols($cols);
         $this->values = $this->convertValues($values);
-        
+
         $sql = "UPDATE ".$this->prefix.$table." SET ".$this->cols." WHERE ".$where;
         $sth = $this->prepare($sql);
         $sth->execute($this->values);
@@ -168,7 +168,7 @@ class Db extends PDO implements IDb
         if ($this->log === true) {
             Logger::addDbLog('update', $table, $where, $values);
         }
-        
+
         /**
          * If the operation completes successfully,
          * returns an error if not true.
@@ -176,7 +176,7 @@ class Db extends PDO implements IDb
         if ($sth) return true;
         return $this->errorInfo();
     }
-    
+
     /**
      * Delete affected data.
      *
@@ -296,7 +296,87 @@ class Db extends PDO implements IDb
         }
         return false;
     }
-    
+
+    /**
+     * Return affected rows
+     *
+     * @param string $cols
+     * @param string $table
+     * @param string $joinTables
+     * @param mixed $where
+     * @param mixed $limit
+     * @param string $order_by
+     * @return mixed
+     */
+    public function innerJoin(String $cols, String $table, String $joinTables, $where = 1, $limit = 20, String $order_by = null)
+    {
+        /* Check columns */
+        if ($cols != "*")
+        {
+            if (strpos($cols, ",")) {
+                /* Set new columns variable */
+                $newCols = "";
+
+                /* Explode columns */
+                $cols = explode(",", $cols);
+
+                foreach ($cols as $col)
+                {
+                    $newCols .= $this->prefix.$col.',';
+                }
+
+                $cols = rtrim($newCols, ',');
+            } else {
+                $cols = $this->prefix.$cols;
+            }
+        }
+
+        /* Explode join tables */
+        $joinTables = explode(",", $joinTables);
+
+        /* Set new join tables variable */
+        $newJoinTables = "";
+
+        foreach ($joinTables as $row)
+        {
+            $newJoinTables .= "INNER JOIN ".$this->prefix.$row." ";
+        }
+        $joinTables = rtrim($newJoinTables, ',');
+
+        /* Check order by */
+        if (empty($order_by)) $order_by = $this->prefix.$table.".id DESC";
+
+        /* Set sql */
+        $sql = "SELECT {$cols} FROM ".$this->prefix.$table." ".$joinTables." ON {$where} ORDER BY $order_by LIMIT $limit";
+
+        /* Check cache on/off */
+        if ($this->cache === true) {
+            /* Set cache file name */
+            $cache = set_cache_name($sql, $where);
+            if (Cache::queryCheck($cache, $this->cacheTime)) return Cache::getQuery($cache);
+        }
+
+        /* Check log permission */
+        if ($this->log === true) {
+            Logger::addDbLog('inner join', $joinTables, $where, "");
+        }
+
+        $sth = $this->query($sql, \PDO::FETCH_ASSOC);
+
+        /**
+         * If the operation completes successfully,
+         * returns an false if not array.
+         */
+        if ($sth->rowCount() > 0) {
+
+            $data = $sth->fetchAll();
+            if ($this->cache === true) Cache::setQuery($cache, $data);
+            return $data;
+
+        }
+        return false;
+    }
+
     /**
      * Return the count of affected rows.
      *
@@ -314,7 +394,7 @@ class Db extends PDO implements IDb
         $sth->execute();
         return $sth->fetchColumn();
     }
-    
+
     /**
      * Return affected search results.
      *
@@ -363,7 +443,7 @@ class Db extends PDO implements IDb
      * @return string
      */
     private function convertCols($param) : String
-    {    
+    {
         /* Reset */
         $this->cols = "";
 
@@ -385,7 +465,7 @@ class Db extends PDO implements IDb
      * @return array
      */
     private function convertValues($values) : Array
-    {    
+    {
         /* Reset values */
         $this->values = [
             //

@@ -74,6 +74,19 @@ interface Db
     public function selectUniq(String $table, String $cols, $where = 1, $values = 1, String $order_by = "id DESC");
 
     /**
+     * Return affected rows
+     *
+     * @param string $cols
+     * @param string $table
+     * @param string $joinTables
+     * @param mixed $where
+     * @param mixed $limit
+     * @param string $order_by
+     * @return mixed
+     */
+    public function innerJoin(String $cols, String $table, String $joinTables, $where = 1, $limit = 20, String $order_by = null);
+
+    /**
      * Return the count of affected rows.
      *
      * @param  string $table
