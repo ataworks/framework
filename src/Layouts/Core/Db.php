@@ -59,7 +59,7 @@ interface Db
      * @param  string $order_by
      * @return mixed
      */
-    public function select(String $table, String $cols, $where = 1, $values = 1, $limit = 20, String $order_by = 'id DESC');
+    public function select(String $table, String $cols, $where = 1, $values = 1, $limit = 120, String $order_by = 'id DESC');
 
     /**
      * Return affected row.
@@ -86,7 +86,7 @@ interface Db
      * @param  string $order_by
      * @return mixed
      */
-    public function innerJoin(String $cols, String $table, String $joinTables, $where = 1, $values = 1, $single = false, $limit = 20, String $order_by = null);
+    public function innerJoin(String $cols, String $table, String $joinTables, $where = 1, $values = 1, $single = false, $limit = 120, String $order_by = null);
 
     /**
      * Return the count of affected rows.
@@ -109,7 +109,7 @@ interface Db
      * @param  string $order_by
      * @return mixed
      */
-    public function search(String $table, String $cols, $where, $values,  $limit = 20, String $order_by = 'DESC');
+    public function search(String $table, String $cols, $where, $values,  $limit = 120, String $order_by = 'DESC');
 
     /**
      * Cache on/off.

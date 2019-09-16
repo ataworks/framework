@@ -217,7 +217,7 @@ class Db extends PDO implements IDb
      * @param  string $order_by
      * @return mixed
      */
-    public function select(String $table, String $cols, $where = 1, $values = 1, $limit = 20, String $order_by = 'id DESC')
+    public function select(String $table, String $cols, $where = 1, $values = 1, $limit = 120, String $order_by = 'id DESC')
     {
         /* Format values parameter */
         $this->values = $this->convertValues($values);
@@ -310,7 +310,7 @@ class Db extends PDO implements IDb
      * @param  string $order_by
      * @return mixed
      */
-    public function innerJoin(String $cols, String $table, String $joinTables, $where = 1, $values = 1, $single = false, $limit = 20, String $order_by = null)
+    public function innerJoin(String $cols, String $table, String $joinTables, $where = 1, $values = 1, $single = false, $limit = 120, String $order_by = null)
     {
         /* Format values parameter */
         $this->values = $this->convertValues($values);
@@ -414,7 +414,7 @@ class Db extends PDO implements IDb
      * @param  string $order_by
      * @return mixed
      */
-    public function search(String $table, String $cols, $where, $values,  $limit = 20, String $order_by = 'DESC')
+    public function search(String $table, String $cols, $where, $values,  $limit = 120, String $order_by = 'DESC')
     {
         /* Set sql */
         $sql = "SELECT $cols FROM ".$this->prefix.$table." WHERE ".$where." LIKE :q ORDER BY id $order_by LIMIT $limit";
@@ -533,6 +533,6 @@ class Db extends PDO implements IDb
             //
         ];
         $this->cols   = null;
-        $this->limit  = 20;
+        $this->limit  = 120;
     }
 }
