@@ -20,6 +20,20 @@ abstract class Model
     protected $db;
 
     /**
+     * Keep current language id for site
+     *
+     * @var int $langId
+     */
+    protected $langId;
+
+    /**
+     * Keep database prefix
+     *
+     * @var string $prefix
+     */
+    protected $prefix = DB_PREFIX;
+
+    /**
      * Set database object.
      *
      * @return void
@@ -28,5 +42,8 @@ abstract class Model
     {
         /* Set instance */
         $this->db = Registry::get('Ataworks\Core\Db');
+
+        /* Set current language id */
+        $this->langId = CONFIG['lang']['site'];
     }
 }

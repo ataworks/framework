@@ -36,7 +36,7 @@ if (!function_exists('lang_name'))
                 return 'English';
                 break;
             case 'de':
-                return 'Deutsch';
+                return 'German';
                 break;
             default:
                 return __($name);

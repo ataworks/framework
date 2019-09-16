@@ -71,7 +71,11 @@ class Application
             $lang = Registry::get("Ataworks\Core\Db")
                 ->setLog(false)
                 ->cache(true, 3600)
-                ->selectUniq('languages', 'code', 'id = ?', $Config['lang']['site']);
+                ->selectSingle('languages', 'code', 'id = ?', $Config['lang']['site']);
+
+            /* Default database class settings */
+            Registry::get("Ataworks\Core\Db")->setLog(true);
+            Registry::get("Ataworks\Core\Db")->cache(false);
 
             /* Set lang code */
             $lang = $lang['code'];
@@ -96,7 +100,7 @@ class Application
         }
 
         /* Unset variables */
-        unset($loader, $twig, $functions);
+        unset($loader, $twig, $functions, $lang);
 
         /**
          * Check maintenance mode.

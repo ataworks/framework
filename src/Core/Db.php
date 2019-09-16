@@ -263,7 +263,7 @@ class Db extends PDO implements IDb
      * @param  string $order_by
      * @return mixed
      */
-    public function selectUniq(String $table, String $cols, $where = 1, $values = 1, String $order_by = "id DESC")
+    public function selectSingle(String $table, String $cols, $where = 1, $values = 1, String $order_by = "id DESC")
     {
         /* Format values parameter */
         $this->values = $this->convertValues($values);
@@ -282,7 +282,7 @@ class Db extends PDO implements IDb
 
         /* Check log permission */
         if ($this->log === true) {
-            Logger::addDbLog('selectUniq', $table, $where, $values);
+            Logger::addDbLog('selectSingle', $table, $where, $values);
         }
 
         /**
@@ -300,16 +300,21 @@ class Db extends PDO implements IDb
     /**
      * Return affected rows
      *
-     * @param string $cols
-     * @param string $table
-     * @param string $joinTables
-     * @param mixed $where
-     * @param mixed $limit
-     * @param string $order_by
+     * @param  string $cols
+     * @param  string $table
+     * @param  string $joinTables
+     * @param  mixed $where
+     * @param  mixed  $values
+     * @param  boolean $single
+     * @param  mixed $limit
+     * @param  string $order_by
      * @return mixed
      */
-    public function innerJoin(String $cols, String $table, String $joinTables, $where = 1, $limit = 20, String $order_by = null)
+    public function innerJoin(String $cols, String $table, String $joinTables, $where = 1, $values = 1, $single = false, $limit = 20, String $order_by = null)
     {
+        /* Format values parameter */
+        $this->values = $this->convertValues($values);
+
         /* Check columns */
         if ($cols != "*")
         {
@@ -361,18 +366,21 @@ class Db extends PDO implements IDb
             Logger::addDbLog('inner join', $joinTables, $where, "");
         }
 
-        $sth = $this->query($sql, \PDO::FETCH_ASSOC);
+        $sth = $this->prepare($sql);
+        $sth->execute($this->values);
 
         /**
          * If the operation completes successfully,
          * returns an false if not array.
          */
         if ($sth->rowCount() > 0) {
-
-            $data = $sth->fetchAll();
+            if ($single == true) {
+                $data = $sth->fetch();
+            } else {
+                $data = $sth->fetchAll();
+            }
             if ($this->cache === true) Cache::setQuery($cache, $data);
             return $data;
-
         }
         return false;
     }

@@ -19,7 +19,7 @@ interface Db
 
     /**
      * Add new data to database.
-     * 
+     *
      * @param  string $table
      * @param  string $cols
      * @param  mixed  $values
@@ -71,20 +71,22 @@ interface Db
      * @param  string $order_by
      * @return mixed
      */
-    public function selectUniq(String $table, String $cols, $where = 1, $values = 1, String $order_by = "id DESC");
+    public function selectSingle(String $table, String $cols, $where = 1, $values = 1, String $order_by = "id DESC");
 
     /**
      * Return affected rows
      *
-     * @param string $cols
-     * @param string $table
-     * @param string $joinTables
-     * @param mixed $where
-     * @param mixed $limit
-     * @param string $order_by
+     * @param  string $cols
+     * @param  string $table
+     * @param  string $joinTables
+     * @param  mixed $where
+     * @param  mixed  $values
+     * @param  boolean $single
+     * @param  mixed $limit
+     * @param  string $order_by
      * @return mixed
      */
-    public function innerJoin(String $cols, String $table, String $joinTables, $where = 1, $limit = 20, String $order_by = null);
+    public function innerJoin(String $cols, String $table, String $joinTables, $where = 1, $values = 1, $single = false, $limit = 20, String $order_by = null);
 
     /**
      * Return the count of affected rows.
