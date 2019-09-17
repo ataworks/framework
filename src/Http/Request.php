@@ -88,7 +88,7 @@ class Request implements IRequest
      */
     public static function server(String $key = '', $value = null)
     {
-        $key = upper($key);
+        $key = mb_strtoupper($key);
         if (!empty($value)) return $_SERVER[$key] = $value;
         if (isset($_SERVER[$key])) return clean($_SERVER[$key]);
         return false;
