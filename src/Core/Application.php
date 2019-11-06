@@ -54,7 +54,7 @@ class Application
         $Config = CONFIG;
 
         /* Check cache */
-        if ($Config['cache'] == 1) {
+        if ($Config['general']['cache'] == 1) {
             $twigConfig = ["cache" => APP_DIR.'Storage/Cache/template/', "auto_reload" => true];
         } else {
             $twigConfig = ["auto_reload" => false];
@@ -62,7 +62,7 @@ class Application
 
         if (is_admin_folder()) {
             /* Load common language files for admin */
-            load_lang_files(ADMIN_LANG_DIR.$Config['lang']['admin'].'/');
+            load_lang_files(ADMIN_LANG_DIR.$Config['general']['admin_lang'].'/');
 
             /* Twig loader */
             $loader = new \Twig\Loader\FilesystemLoader(ADMIN_VIEW);
@@ -71,7 +71,7 @@ class Application
             $lang = Registry::get("Ataworks\Core\Db")
                 ->setLog(false)
                 ->cache(true, 3600)
-                ->selectSingle('languages', 'code', 'id = ?', $Config['lang']['site']);
+                ->selectSingle('languages', 'code', 'id = ?', $Config['general']['site_lang']);
 
             /* Default database class settings */
             Registry::get("Ataworks\Core\Db")->setLog(true);
@@ -84,7 +84,7 @@ class Application
             load_lang_files(LANG_DIR.$lang.'/');
 
             /* Twig loader */
-            $loader = new \Twig\Loader\FilesystemLoader($Config['theme'], VIEW);
+            $loader = new \Twig\Loader\FilesystemLoader($Config['general']['site_theme'], VIEW);
         }
 
         /* Start twig */
@@ -109,7 +109,7 @@ class Application
          * Only applied to the front-end.
          * TAdministrators can always view the site.
          */
-        if ($Config['environment'] == 'maintenance' && Session::get('rank') != 'admin' && is_admin_folder() === false )
+        if ($Config['general']['environment'] == 'maintenance' && Session::get('rank') != 'admin' && is_admin_folder() === false )
         {
             exit(View::render('maintenance'));
         }

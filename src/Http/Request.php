@@ -34,7 +34,7 @@ class Request implements IRequest
      */
     public static function requestFullUri() : String
     {
-        return rtrim(CONFIG['url'], '/').self::requestUri();
+        return rtrim(CONFIG['general']['url'], '/').self::requestUri();
     }
 
     /**

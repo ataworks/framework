@@ -44,6 +44,6 @@ abstract class Model
         $this->db = Registry::get('Ataworks\Core\Db');
 
         /* Set current language id */
-        $this->langId = CONFIG['lang']['site'];
+        $this->langId = CONFIG['general']['site_lang'];
     }
 }

@@ -73,7 +73,7 @@ class Logger implements ILogger
         $logMessage = date(self::$timeFormat).' '.self::$levels[$code].": message => $msg file $filePath line => $line url => $url\r\n";
         
         /* Check error report status */
-        if ($Config['error_report'] == 'on') {
+        if ($Config['general']['error_report'] == 'on') {
             if (file_exists($file)) {
                 return self::filePuts($file, $logMessage);
             }

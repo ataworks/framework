@@ -24,9 +24,6 @@ class View implements IView
      */
     public static function render(String $path, $data = [])
     {
-        /* Get config */
-        $Config = CONFIG;
-
         /* Get twig */
         $twig = Registry::get('Twig');
 
