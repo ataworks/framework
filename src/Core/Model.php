@@ -44,6 +44,10 @@ abstract class Model
         $this->db = Registry::get('Ataworks\Core\Db');
 
         /* Set current language id */
-        $this->langId = CONFIG['general']['site_lang'];
+        if (is_admin_folder()) {
+            $this->langId = CONFIG['general']['site_lang'];
+        } else {
+            $this->langId = $_COOKIE['language_id'];
+        }
     }
 }
