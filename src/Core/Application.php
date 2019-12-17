@@ -67,18 +67,39 @@ class Application
             /* Twig loader */
             $loader = new \Twig\Loader\FilesystemLoader(ADMIN_VIEW);
         } else {
-            /* Convert site lang id to lang code */
-            $lang = Registry::get("Ataworks\Core\Db")
-                ->setLog(false)
-                ->cache(true, 3600)
-                ->selectSingle('languages', 'code', 'id = ?', $Config['general']['site_lang']);
+            /* Check language */
+            if (!isset($_COOKIE['language']) || strlen($_COOKIE['language']) > 2) {
+                /* Default language block */
+                defaultLanguage:
 
-            /* Default database class settings */
-            Registry::get("Ataworks\Core\Db")->setLog(true);
-            Registry::get("Ataworks\Core\Db")->cache(false);
+                $lang = Registry::get("Ataworks\Core\Db")
+                    ->setLog(false)
+                    ->cache(true, 3600)
+                    ->selectSingle('languages', 'code', 'id = ?', $Config['general']['site_lang']);
 
-            /* Set lang code */
-            $lang = $lang['code'];
+                /* Default database class settings */
+                Registry::get("Ataworks\Core\Db")->setLog(true);
+                Registry::get("Ataworks\Core\Db")->cache(false);
+
+                /* Set lang code */
+                $lang = $lang['code'];
+            } else {
+                /* Check language data */
+                $item = Registry::get("Ataworks\Core\Db")
+                    ->setLog(false)
+                    ->cache(true, 3600)
+                    ->selectSingle('languages', 'code', 'code = ?', $_COOKIE['language']);
+
+                /* Default database class settings */
+                Registry::get("Ataworks\Core\Db")->setLog(true);
+                Registry::get("Ataworks\Core\Db")->cache(false);
+
+                if (!is_array($item)) {
+                    goto defaultLanguage;
+                } else {
+                    $lang = $_COOKIE['language'];
+                }
+            }
 
             /* Load common language files */
             load_lang_files(LANG_DIR.$lang.'/');
