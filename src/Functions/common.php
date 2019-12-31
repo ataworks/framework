@@ -4,7 +4,7 @@ if (!function_exists('get_url'))
 {
     /**
      * Url decode to array.
-     * 
+     *
      * @return string
      */
     function get_url()
@@ -86,7 +86,7 @@ if (!function_exists('redirect'))
             if (is_integer($time) && $time <> 0) {
                 header('Refresh: '.$time.';url='.$url);
             } else {
-               header('Location: '.$url);
+                header('Location: '.$url);
             }
         } else {
             echo '<meta http-equiv="refresh" content="'.$time.';url='.$url.'" />';
@@ -157,7 +157,7 @@ if (!function_exists('get_route'))
     {
         if (isset($_GET["do"])) {
             $route = array_filter(explode("/", clean($_GET["do"])));
-            return $route;    
+            return $route;
         }
         return false;
     }
@@ -167,7 +167,7 @@ if (!function_exists('file_check'))
 {
     /**
      * Check file type.
-     * 
+     *
      * @param  string  $str
      * @return boolean
      */
@@ -373,9 +373,8 @@ if (!function_exists('copy_dir'))
      */
     function copy_dir($src, $dst)
     {
-        if (file_exists($dst)) rmdir($dst);
         if (is_dir($src)) {
-            mkdir($dst);
+            if (!is_dir($dst)) mkdir($dst);
             $files = scandir($src);
             foreach ($files as $file)
             {
@@ -385,7 +384,7 @@ if (!function_exists('copy_dir'))
                 }
             }
         } else if (file_exists($src)) {
-             copy($src, $dst);
+            copy($src, $dst);
         }
     }
 }
