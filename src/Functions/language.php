@@ -68,3 +68,20 @@ if (!function_exists('load_lang_files'))
         }
     }
 }
+
+if (!function_exists('get_lang_id_in_cookie'))
+{
+    /**
+     * Return language id in cookie
+     *
+     * @return int
+     */
+    function get_lang_id_in_cookie()
+    {
+        if (isset($_COOKIE['language_id'])) {
+            return $_COOKIE['language_id'];
+        }
+
+        return CONFIG['general']['site_lang'];
+    }
+}

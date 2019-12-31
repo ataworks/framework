@@ -47,7 +47,7 @@ abstract class Model
         if (is_admin_folder()) {
             $this->langId = CONFIG['general']['site_lang'];
         } else {
-            $this->langId = $_COOKIE['language_id'];
+            $this->langId = get_lang_id_in_cookie();
         }
     }
 }
