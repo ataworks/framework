@@ -270,17 +270,17 @@ if (!function_exists('shutdown_handler'))
     }
 }
 
-if (!function_exists('paginator'))
+if (!function_exists('pagination'))
 {
     /**
-     * Return paginator class.
+     * Return pagination content.
      *
      * @param  int    $pages
      * @param  int    $active
      * @param  string $url
      * @return string
      */
-    function paginator($pages, $active, $url)
+    function pagination($pages, $active, $url)
     {
         return Ataworks\Helpers\Paginator::getContent($pages, $active, $url);
     }

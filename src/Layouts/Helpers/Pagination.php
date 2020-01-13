@@ -2,7 +2,7 @@
 
 namespace Ataworks\Layouts\Helpers;
 
-interface Paginator
+interface Pagination
 {
     /**
      * Return total element.

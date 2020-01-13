@@ -2,17 +2,17 @@
 
 namespace Ataworks\Helpers;
 
-use Ataworks\Layouts\Helpers\Paginator as IPaginator;
+use Ataworks\Layouts\Helpers\Pagination as IPagination;
 
 /**
- * Ataworks paginator class
+ * Ataworks pagination class
  *
  * @author Emrullah Tanıma <emrtnm@gmail.com>
  * @package Ataworks
  * @license MIT
  * @copyright 2018
  */
-class Paginator implements IPaginator
+class Pagination implements IPagination
 {
     /**
      * Keep limit for page.
@@ -22,11 +22,11 @@ class Paginator implements IPaginator
     public static $limit = 10;
 
     /**
-     * Keep adjacents limit
+     * Keep presentation limit
      * 
-     * @var int $adjacents
+     * @var int presentation
      */
-    public static $adjacents = 9;
+    public static $presentation = 9;
 
     /**
      * Return total element.
@@ -136,6 +136,8 @@ class Paginator implements IPaginator
             /* Return ready content */
             return $content;
         }
+
+        return false;
     }
 
     /**
@@ -161,8 +163,8 @@ class Paginator implements IPaginator
         /* Array for data */
         $data = [];
 
-        /* Set adjacents link */
-        $adj = self::$adjacents;
+        /* Set presentation link */
+        $adj = self::$presentation;
         
         if (isset($pages, self::$limit) === true)
         {
