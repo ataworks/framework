@@ -282,7 +282,7 @@ if (!function_exists('pagination'))
      */
     function pagination($pages, $active, $url)
     {
-        return Ataworks\Helpers\Paginator::getContent($pages, $active, $url);
+        return Ataworks\Helpers\Pagination::getContent($pages, $active, $url);
     }
 }
 
