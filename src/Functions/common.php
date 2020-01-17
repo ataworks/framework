@@ -462,3 +462,43 @@ if (!function_exists('is_phone'))
         return true;
     }
 }
+
+if (!function_exists('get_theme_config'))
+{
+    /**
+     * Return theme config
+     *
+     * @param  string $key
+     * @return string
+     */
+    function get_theme_config($key)
+    {
+        if (file_exists(THEME_DIR.'functions.php')) {
+            /* Set theme class */
+            $class = rtrim( CONFIG['general']['site_theme'], '/').'Theme';
+
+            /* Check config file method */
+            if (method_exists($class, 'configFile'))
+            {
+                /* Set config file */
+                $file = THEME_DIR.$class::configFile();
+
+                /* Check config file */
+                if (file_exists($file) && !is_dir($file))
+                {
+                    /* Get file content */
+                    $config = file_get_contents($file);
+
+                    /* Json decode */
+                    $config = \Ataworks\Helpers\Json::decodeArray($config);
+
+                    /* Check key */
+                    if (isset($config[$key])) {
+                        return $config[$key];
+                    }
+                }
+            }
+        }
+        return '';
+    }
+}
