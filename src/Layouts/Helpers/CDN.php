@@ -33,4 +33,11 @@ interface CDN
      * @return array
      */
     public static function scripts() : Array;
+
+    /**
+     * Return font awesome list
+     *
+     * @return array
+     */
+    public static function fontAwesomeList() : Array;
 }

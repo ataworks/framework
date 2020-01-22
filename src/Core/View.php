@@ -42,6 +42,7 @@ class View implements IView
         /* Default data */
         $data['CDNStyles']  = CDN::styles();
         $data['CDNScripts'] = CDN::scripts();
+        $data['CDNFontAwesomeList'] = CDN::fontAwesomeList();
 
         /* Render */
         echo $twig->render("template/$path.twig", $data);
