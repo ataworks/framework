@@ -502,3 +502,45 @@ if (!function_exists('get_theme_config'))
         return '';
     }
 }
+
+if (!function_exists('reading_time'))
+{
+    /**
+     * Reading time function.
+     *
+     * @param  string $content
+     * @return string
+     */
+    function reading_time($content = "")
+    {
+        /* Set time variables */
+        $fiftySeconds = 50;
+        $oneMinute = 60;
+        $totalSecondsInOneHour = 3600;
+
+        /* It then calculates how many words are in the content, based on gaps. */
+        $wordCount = round(count(explode(" ", strip_tags($content))));
+
+        /* Calculates the reading speed by dividing the word count by the incoming speed value (default is 2). */
+        $readingTime = ceil($wordCount / 2);
+
+        /* If the reading time is below 1 min, the output is given in seconds. */
+        if ($readingTime < $fiftySeconds) {
+            $second = intval($readingTime / 10);
+            $second++;
+            $second *= 10;
+            return "$second " . __('second');
+        }
+
+        /* If the reading time is above 1 min, output is given in minutes. */
+        if ($readingTime < $totalSecondsInOneHour) {
+            $minute = ceil($readingTime / $oneMinute);
+            return "$minute " . __('minute');
+        }
+
+        /* If the reading time is over 1 hour, the output is given in hours. */
+        $hour = floor($readingTime / $totalSecondsInOneHour);
+        return "$hour " . __('hour');
+    }
+}
+
