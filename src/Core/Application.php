@@ -111,7 +111,16 @@ class Application
         /* Start twig */
         $twig   = Registry::set("Twig", new \Twig\Environment($loader, $twigConfig));
 
-        /* Start twig functions */
+        /* Start system twig functions */
+        $functions = new \Ataworks\Helpers\TwigFunctions();
+        $functions = $functions->getFunctions();
+
+        /* Add twig function */
+        foreach ($functions as $function) {
+            $twig->addFunction($function);
+        }
+
+        /* Start project twig functions */
         $functions = new \App\Functions\TwigFunctions();
         $functions = $functions->getFunctions();
 
