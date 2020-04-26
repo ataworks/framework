@@ -235,7 +235,7 @@ if (!function_exists('error_handler'))
      */
     function error_handler($code, $msg, $file, $line)
     {
-        App\Exceptions\Handler::report($code, $msg, $file, $line);
+        Ataworks\Exceptions\Handler::report($code, $msg, $file, $line);
     }
 }
 
@@ -249,7 +249,7 @@ if (!function_exists('exception_handler'))
      */
     function exception_handler($e)
     {
-        App\Exceptions\Handler::report($e->getCode(), $e->getMessage(), $e->getFile(), $e->getLine());
+        Ataworks\Exceptions\Handler::report($e->getCode(), $e->getMessage(), $e->getFile(), $e->getLine());
     }
 }
 
@@ -265,7 +265,7 @@ if (!function_exists('shutdown_handler'))
         $e = error_get_last();
         if (isset($e) && ($e['type'] & (E_ERROR | E_PARSE | E_CORE_ERROR | E_CORE_WARNING | E_COMPILE_ERROR | E_COMPILE_WARNING)))
         {
-            App\Exceptions\Handler::report($e['type'], $e['message'], $e['file'], $e['line']);
+            Ataworks\Exceptions\Handler::report($e['type'], $e['message'], $e['file'], $e['line']);
         }
     }
 }

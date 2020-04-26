@@ -30,7 +30,7 @@ class Application
         define('FW_VERSION', $this->version());
 
         /* Start handler class */
-        new \App\Exceptions\Handler(new Logger());
+        new \Ataworks\Exceptions\Handler(new Logger());
 
         /**
          * Exception Handler
