@@ -83,8 +83,8 @@ final class Router implements IRouter
                 }
 
             } else {
-                /* Error controller */
-                $this->route = $this->error();
+                /* Error method */
+                $this->error();
             }
 
         }
@@ -140,8 +140,8 @@ final class Router implements IRouter
                 }
 
             } else {
-                /* Default method */
-                Registry::get($controller)->index();
+                /* Error method */
+                $this->error();
             }
         }
     }
@@ -149,13 +149,12 @@ final class Router implements IRouter
     /**
      * Error controller and method.
      *
-     * @return array
+     * @return void
      */
-    private function error() : Array
+    private function error()
     {
-        $this->route["cont"]   = "Error";
-        $this->route["method"] = "index";
-        return $this->route;
+        /* Redirect error page */
+        redirect_err();
     }
 
     /**
