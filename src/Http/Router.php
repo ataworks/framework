@@ -155,6 +155,7 @@ final class Router implements IRouter
     {
         /* Redirect error page */
         redirect_err();
+        exit;
     }
 
     /**
