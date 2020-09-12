@@ -62,7 +62,7 @@ class Logger implements ILogger
     {
         /* Get config */
         $Config = CONFIG;
-        
+
         /* Keep error log file */
         $file = self::$path.'error.log';
 
@@ -71,7 +71,7 @@ class Logger implements ILogger
 
         /* Create log message */
         $logMessage = date(self::$timeFormat).' '.self::$levels[$code].": message => $msg file $filePath line => $line url => $url\r\n";
-        
+
         /* Check error report status */
         if ($Config['general']['error_report'] == 'on') {
             if (file_exists($file)) {
@@ -87,10 +87,10 @@ class Logger implements ILogger
      * @param  string $type
      * @param  string $table
      * @param  mixed  $where
-     * @param  mixed  $vals
+     * @param  mixed  $values
      * @return void
      */
-    public static function addDbLog(String $type, String $table, $where, $vals)
+    public static function addDbLog(String $type, String $table, $where, $values)
     {
         /**
          * Keep database log file name.
@@ -105,10 +105,10 @@ class Logger implements ILogger
         }
 
         /* Check values */
-        if (is_array($vals)) $vals = implode(",", $vals);
+        if (is_array($values)) $values = implode(",", $values);
 
         /* Create log message */
-        $logMessage = date(self::$timeFormat)." $type: table => $table where => $where values => $vals "
+        $logMessage = date(self::$timeFormat)." $type: table => $table where => $where values => $values "
         ."IP => ".get_ip()." url => ".get_url()." user => ".Session::get('uname')."\r\n";
 
         /* Check database log file */
@@ -116,6 +116,37 @@ class Logger implements ILogger
             return self::filePuts($file, $logMessage);
         }
         return self::fileWrite($file, $logMessage);
+    }
+
+
+    /**
+     * Add new account log.
+     *
+     * @param  string $msg
+     * @param  string $name
+     * @return void
+     */
+    public static function addAccountLog(String $msg, String $name)
+    {
+        /* Get config */
+        $Config = CONFIG;
+
+        /* Keep error log file */
+        $file = self::$path.'account.log';
+
+        /* Get url */
+        $url = get_url();
+
+        /* Create log message */
+        $logMessage = date(self::$timeFormat)." result_code => $msg UserName|Email => ".$name." IP => ".get_ip()." url => $url user => ".Session::get('uname')."\r\n";
+
+        /* Check error report status */
+        if ($Config['general']['error_report'] == 'on') {
+            if (file_exists($file)) {
+                return self::filePuts($file, $logMessage);
+            }
+            return self::fileWrite($file, $logMessage);
+        }
     }
 
     /**

@@ -21,10 +21,19 @@ interface Logger
      * @param  string $type
      * @param  string $table
      * @param  mixed  $where
-     * @param  mixed  $vals
+     * @param  mixed  $values
      * @return void
      */
-    public static function addDbLog(String $type, String $table, $where, $vals);
+    public static function addDbLog(String $type, String $table, $where, $values);
+
+    /**
+     * Add new account log.
+     *
+     * @param  string $msg
+     * @param  string $name
+     * @return void
+     */
+    public static function addAccountLog(String $msg, String $name);
 
     /**
      * File puts contents.

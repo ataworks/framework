@@ -473,30 +473,16 @@ if (!function_exists('get_theme_config'))
      */
     function get_theme_config($key)
     {
-        if (file_exists(THEME_DIR.'functions.php')) {
-            /* Set theme class */
-            $class = rtrim( CONFIG['general']['site_theme'], '/').'Theme';
+        if (file_exists(THEME_DIR.'customize.json')) {
+            /* Get file content */
+            $config = file_get_contents(THEME_DIR.'customize.json');
 
-            /* Check config file method */
-            if (method_exists($class, 'configFile'))
-            {
-                /* Set config file */
-                $file = THEME_DIR.$class::configFile();
+            /* Json decode */
+            $config = \Ataworks\Helpers\Json::decodeArray($config);
 
-                /* Check config file */
-                if (file_exists($file) && !is_dir($file))
-                {
-                    /* Get file content */
-                    $config = file_get_contents($file);
-
-                    /* Json decode */
-                    $config = \Ataworks\Helpers\Json::decodeArray($config);
-
-                    /* Check key */
-                    if (isset($config[$key])) {
-                        return $config[$key];
-                    }
-                }
+            /* Check key */
+            if (isset($config[$key])) {
+                return $config[$key];
             }
         }
         return '';

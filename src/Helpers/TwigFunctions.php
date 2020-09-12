@@ -134,6 +134,16 @@ class TwigFunctions
         self::$functions[] = new \Twig\TwigFunction('reading_time', function($text) {
             return reading_time($text);
         });
+
+        /* Json encode function */
+        self::$functions[] = new \Twig\TwigFunction('json_encode', function($data) {
+            return Json::encode($data);
+        });
+
+        /* Json decode function */
+        self::$functions[] = new \Twig\TwigFunction('json_decode', function($data) {
+            return Json::decodeArray($data);
+        });
     }
 
     /**
