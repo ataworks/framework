@@ -102,18 +102,15 @@ final class Router implements IRouter
     private function run(Array $params = [])
     {
         if (isset($params)) {
-            /* Set controller */
-            $cont_file = $this->type.mb_strtolower($params['cont']).".php";
-
             /* Import controller file */
-            require_once($cont_file);
+            require_once($this->type.mb_strtolower($params['cont']).".php");
 
             /* Set controller */
             $controller = $params['cont'];
 
             /* Set controller type */
             if ($this->type == CONTROLLERS) {
-                $controller    = "\Frontend\\Controllers\\$controller";
+                $controller = "\Frontend\\Controllers\\$controller";
             } else {
                 $controller = "\Backend\\Controllers\\$controller";
             }

@@ -7,7 +7,7 @@ interface Hooks
     /**
      * Load plugins
      *
-     * @param  string $dir
+     * @param  string|null $dir
      * @return void
      */
     public static function loadPlugins(String $dir = null);
@@ -15,7 +15,7 @@ interface Hooks
     /**
      * Activate plugin
      *
-     * @param  string $dir
+     * @param  string $plugin
      * @return void
      */
     public static function activatePlugin(String $plugin);
@@ -23,7 +23,7 @@ interface Hooks
     /**
      * Deactivate plugin
      *
-     * @param  string $dir
+     * @param  string $plugin
      * @return void
      */
     public static function deactivatePlugin(String $plugin);

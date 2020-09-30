@@ -17,12 +17,12 @@ class Application
      *
      * @var string
      */
-    const FW_VERSION = '1.1.0';
+    const FW_VERSION = '1.1.1';
 
     /**
      * Main Method.
      *
-     * @return object
+     * @return void
      */
     public function __construct()
     {

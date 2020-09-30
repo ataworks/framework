@@ -17,7 +17,7 @@ class Hooks implements IHooks
     /**
      * Keep plugin dir
      *
-     * @var const PLUGIN_DIR
+     * @var string PLUGIN_DIR
      */
     const PLUGIN_DIR = PLUGINS_DIR;
 
@@ -42,7 +42,7 @@ class Hooks implements IHooks
     /**
      * Load plugins
      *
-     * @param  string $dir
+     * @param  string|null $dir
      * @return void
      */
     public static function loadPlugins(String $dir = null)
@@ -60,7 +60,7 @@ class Hooks implements IHooks
                             $read = file_get_contents($dir.$file."/$file.json");
                             $json = Json::decodeArray($read);
 
-                            /* Check plugin active/deactive */
+                            /* Check plugin active/deactivate */
                             if ($json['status'] == 'active') {
                                 self::$plugins[$file] = $json['name'];
                                 self::loadPlugins($dir.$file.'/');
@@ -93,7 +93,7 @@ class Hooks implements IHooks
     /**
      * Activate plugin
      *
-     * @param  string $dir
+     * @param  string $plugin
      * @return void
      */
     public static function activatePlugin(String $plugin)
@@ -104,7 +104,7 @@ class Hooks implements IHooks
     /**
      * Deactivate plugin
      *
-     * @param  string $dir
+     * @param  string $plugin
      * @return void
      */
     public static function deactivatePlugin(String $plugin)
@@ -168,7 +168,7 @@ class Hooks implements IHooks
      * Run hook
      *
      * @param  string $hook
-     * @return void
+     * @return mixed
      * @throws \Exception
      */
     public static function run(String $hook)
@@ -176,7 +176,8 @@ class Hooks implements IHooks
         /* Check hook */
         if (!isset(self::$hooks[$hook])) return false;
 
-        foreach (self::$hooks[$hook] as $hook) {
+        foreach (self::$hooks[$hook] as $hook)
+        {
             if (preg_match("/@/i", $hook[0])) {
                 /* Grab all parts based on a / separator */
                 $parts = explode('/', $hook[0]);

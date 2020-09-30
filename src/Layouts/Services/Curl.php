@@ -16,7 +16,7 @@ interface Curl
      * Curl options
      *
      * @param  string $key
-     * @param  mixed $values
+     * @param  mixed $value
      * @return object
      */
     public function option(String $key, $value);

@@ -46,7 +46,7 @@ class Curl implements ICurl
      * Curl options
      *
      * @param  string $key
-     * @param  mixed  $values
+     * @param  mixed  $value
      * @return object
      */
     public function option(String $key, $value)
@@ -91,7 +91,7 @@ class Curl implements ICurl
     /**
      * Curl info
      *
-     * @param  string $key
+     * @param  string|null $key
      * @return mixed
      */
     public function info(String $key = null)

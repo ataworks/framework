@@ -37,7 +37,8 @@ class Rewrite implements IRewrite
         $uri = ltrim(get_url(), '/');
 
         /* Check for loop */
-        foreach ($rules as $rule) {
+        foreach ($rules as $rule)
+        {
             if (preg_match_all($rule[0], $uri, $result)) {
                 /* Check rewrite level */
                 if (strstr($result[0][0], '/')) {

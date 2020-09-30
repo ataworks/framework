@@ -41,7 +41,7 @@ interface Cookie
      *
      * @param  string  $name
      * @param  mixed   $value
-     * @param  int     $time
+     * @param  int|null $time
      * @return boolean
      */
     public function set(String $name, $value, Int $time = null) : Bool;
@@ -49,7 +49,7 @@ interface Cookie
     /**
      * Return cookie value
      *
-     * @param  string $get
+     * @param  string $name
      * @return mixed
      */
     public function get(String $name);
@@ -65,7 +65,7 @@ interface Cookie
      * Delete cookie
      *
      * @param  string  $name
-     * @param  string  $path
+     * @param  string|null $path
      * @return boolean
      */
     public function delete(String $name, String $path = null) : Bool;

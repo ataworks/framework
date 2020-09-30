@@ -53,7 +53,7 @@ if (!function_exists('user_name'))
      * @param  string $str
      * @return string
      */
-    function user_name($str)
+    function user_name(String $str)
     {
         $find    = ['Ç', 'Ş', 'Ğ', 'Ü','U', 'İ','I', 'Ö','O', 'ç', 'ş', 'ğ', 'ü', 'ö', 'ı'];
         $replace = ['c', 's', 'g', 'u','u', 'i','i', 'o', 'o', 'c', 's', 'g', 'u', 'o', 'i'];

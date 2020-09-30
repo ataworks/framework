@@ -25,7 +25,7 @@ class Db extends PDO implements IDb
     private $prefix;
 
     /**
-     * Keep columns datas for database query.
+     * Keep columns data for database query.
      *
      * @var string $cols
      */
@@ -88,7 +88,7 @@ class Db extends PDO implements IDb
                 break;
 
             case 'postresql':
-                $dbms = "pqsql:host=$host dbname=$dbname";
+                $dbms = "pqsql:host=$server dbname=$dbname";
                 break;
         }
 
@@ -111,7 +111,7 @@ class Db extends PDO implements IDb
         /* Set the database charset */
         $this->exec("SET NAMES UTF8");
 
-        /* Set pdo attiribute mode */
+        /* Set pdo attribute mode */
         $this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
     }
 
@@ -146,7 +146,7 @@ class Db extends PDO implements IDb
     }
 
     /**
-     * Update affacted data.
+     * Update affected data.
      *
      * @param  string $table
      * @param  string $cols
@@ -270,10 +270,11 @@ class Db extends PDO implements IDb
 
         $sql = "SELECT $cols FROM ".$this->prefix.$table." WHERE $where ORDER BY $order_by";
 
+        /* Set cache file name */
+        $cache = set_cache_name($sql, $values);
+
         /* Check cache on/off */
         if ($this->cache === true){
-            /* Set cache file name */
-            $cache = set_cache_name($sql, $values);
             if(Cache::queryCheck($cache, $this->cacheTime)) return Cache::getQuery($cache);
         }
 
@@ -307,7 +308,7 @@ class Db extends PDO implements IDb
      * @param  mixed  $values
      * @param  boolean $single
      * @param  mixed $limit
-     * @param  string $order_by
+     * @param  string|null $order_by
      * @return mixed
      */
     public function innerJoin(String $cols, String $table, String $joinTables, $where = 1, $values = 1, $single = false, $limit = 120, String $order_by = null)
@@ -354,10 +355,11 @@ class Db extends PDO implements IDb
         /* Set sql */
         $sql = "SELECT {$cols} FROM ".$this->prefix.$table." ".$joinTables." ON {$where} ORDER BY $order_by LIMIT $limit";
 
+        /* Set cache file name */
+        $cache = set_cache_name($sql, $where);
+
         /* Check cache on/off */
         if ($this->cache === true) {
-            /* Set cache file name */
-            $cache = set_cache_name($sql, $where);
             if (Cache::queryCheck($cache, $this->cacheTime)) return Cache::getQuery($cache);
         }
 
@@ -472,7 +474,7 @@ class Db extends PDO implements IDb
      * @param  mixed $values
      * @return array
      */
-    private function convertValues($values) : Array
+    private function convertValues($values) : array
     {
         /* Reset values */
         $this->values = [
@@ -500,7 +502,7 @@ class Db extends PDO implements IDb
      * Cache on/off.
      *
      * @param  boolean $type
-     * @param  int     $time
+     * @param  int|null $time
      * @return object
      */
     public function cache(Bool $type, Int $time = null)
@@ -532,7 +534,7 @@ class Db extends PDO implements IDb
         $this->values = [
             //
         ];
-        $this->cols   = null;
-        $this->limit  = 120;
+        $this->cols  = null;
+        $this->limit = 120;
     }
 }

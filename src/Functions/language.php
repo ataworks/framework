@@ -8,7 +8,7 @@ if (!function_exists('__'))
      * @param  string $code
      * @return string
      */
-    function __($code)
+    function __(String $code)
     {
         global $_;
         if (isset($_[$code])) {
@@ -26,21 +26,18 @@ if (!function_exists('lang_name'))
      * @param  string $name
      * @return string
      */
-    function lang_name($name)
+    function lang_name(String $name)
     {
-        switch ($name) {
+        switch ($name)
+        {
             case 'tr':
                 return 'Türkçe';
-                break;
             case 'en':
                 return 'English';
-                break;
             case 'de':
                 return 'German';
-                break;
             default:
                 return __($name);
-                break;
         }
     }
 }
@@ -53,11 +50,12 @@ if (!function_exists('load_lang_files'))
      * @param  string $dir
      * @return void
      */
-    function load_lang_files($dir)
+    function load_lang_files(String $dir)
     {
         if (file_exists($dir)) {
             if ($handle = opendir($dir)) {
-                while ($file = readdir($handle)) {
+                while ($file = readdir($handle))
+                {
                     if (is_dir($dir.$file) && file_check($file)) {
                         load_lang_files($dir.$file."/");
                     }

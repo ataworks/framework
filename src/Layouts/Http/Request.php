@@ -21,7 +21,7 @@ interface Request
     /**
      * Post method
      *
-     * @param  string $key
+     * @param  string|null $key
      * @param  mixed  $value
      * @return mixed
      */
@@ -30,7 +30,7 @@ interface Request
     /**
      * Get method
      *
-     * @param  string $key
+     * @param  string|null $key
      * @param  mixed  $value
      * @return mixed
      */
@@ -39,7 +39,7 @@ interface Request
     /**
      * Env method
      *
-     * @param  string $key
+     * @param  string|null $key
      * @param  mixed  $value
      * @return mixed
      */
@@ -57,7 +57,7 @@ interface Request
     /**
      * Request method
      *
-     * @param  string $key
+     * @param  string|null $key
      * @param  mixed  $value
      * @return mixed
      */
@@ -66,7 +66,7 @@ interface Request
     /**
      * Return files
      *
-     * @param  string $name
+     * @param  string|null $name
      * @param  string $type
      * @return mixed
      */

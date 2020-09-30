@@ -43,8 +43,8 @@ class Cache implements ICache
     /**
      * Check whether the query is being cached.
      *
-     * @param  string   $sql
-     * @param  int      $cacheTime
+     * @param  string $sql
+     * @param  int    $cacheTime
      * @return boolean
      */
     public static function queryCheck(String $sql, Int $cacheTime = null) : Bool

@@ -28,7 +28,7 @@ interface Db
     public function add(String $table, String $cols, $values);
 
     /**
-     * Update affacted data.
+     * Update affected data.
      *
      * @param  string $table
      * @param  string $cols
@@ -83,7 +83,7 @@ interface Db
      * @param  mixed  $values
      * @param  boolean $single
      * @param  mixed $limit
-     * @param  string $order_by
+     * @param  string|null $order_by
      * @return mixed
      */
     public function innerJoin(String $cols, String $table, String $joinTables, $where = 1, $values = 1, $single = false, $limit = 120, String $order_by = null);
@@ -115,7 +115,7 @@ interface Db
      * Cache on/off.
      *
      * @param  boolean $type
-     * @param  int     $time
+     * @param  int|null $time
      * @return object
      */
     public function cache(Bool $type, Int $time = null);

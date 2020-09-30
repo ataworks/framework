@@ -7,7 +7,7 @@ This is framework is published as an open source to help those who buy their pro
 
 ## Server Requirements
 
-- PHP >= 7.2.0
+- PHP >= 7.1.0
 - Mbstring PHP Extension
 - PDO PHP Extension
 - OpenSSL PHP Extension

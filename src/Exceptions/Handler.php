@@ -11,13 +11,12 @@ class Handler
      *
      * @var array $instance
      */
-    public static $instance; 
+    public static $instance;
 
     /**
      * Main method.
      *
-     * @param  string $class
-     * @return void
+     * @param ILogger $class
      */
     public function __construct(ILogger $class)
     {
@@ -49,7 +48,7 @@ class Handler
      * @param  string $msg
      * @param  string $file
      * @param  int    $line
-     * @return mixed
+     * @return void|false
      */
     public static function printError($code, String $msg, String $file, Int $line)
     {

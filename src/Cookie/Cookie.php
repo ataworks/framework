@@ -137,7 +137,7 @@ class Cookie implements ICookie
     /**
      * Return cookie value
      *
-     * @param  string $get
+     * @param  string $name
      * @return mixed
      */
     public function get(String $name)
@@ -165,7 +165,7 @@ class Cookie implements ICookie
      * Delete cookie
      *
      * @param  string $name
-     * @param  string $path
+     * @param  string|null $path
      * @return boolean
      */
     public function delete(String $name, String $path = null) : Bool

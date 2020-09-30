@@ -19,7 +19,7 @@ abstract class Controller implements IController
      * Load model file
      *
      * @param  string $model
-     * @return void
+     * @return mixed
      */
     public function loadModel(String $model)
     {

@@ -75,9 +75,10 @@ class Logger implements ILogger
         /* Check error report status */
         if ($Config['general']['error_report'] == 'on') {
             if (file_exists($file)) {
-                return self::filePuts($file, $logMessage);
+                self::filePuts($file, $logMessage);
+            } else {
+                self::fileWrite($file, $logMessage);
             }
-            return self::fileWrite($file, $logMessage);
         }
     }
 
@@ -113,9 +114,10 @@ class Logger implements ILogger
 
         /* Check database log file */
         if (file_exists($file)) {
-            return self::filePuts($file, $logMessage);
+            self::filePuts($file, $logMessage);
+        } else {
+            self::fileWrite($file, $logMessage);
         }
-        return self::fileWrite($file, $logMessage);
     }
 
 
@@ -143,9 +145,10 @@ class Logger implements ILogger
         /* Check error report status */
         if ($Config['general']['error_report'] == 'on') {
             if (file_exists($file)) {
-                return self::filePuts($file, $logMessage);
+                self::filePuts($file, $logMessage);
+            } else {
+                self::fileWrite($file, $logMessage);
             }
-            return self::fileWrite($file, $logMessage);
         }
     }
 

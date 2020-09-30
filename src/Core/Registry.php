@@ -39,7 +39,7 @@ abstract class Registry implements IRegistry
      *
      * @param  string $name
      * @param  object $object
-     * @return mixed
+     * @return boolean|object
      */
     public static function set(String $name, $object)
     {
@@ -50,5 +50,7 @@ abstract class Registry implements IRegistry
             self::$instances[$name] = $object;
             return self::$instances[$name];
         }
+
+        return false;
     }
 }

@@ -9,10 +9,9 @@ if (!function_exists('get_url'))
      */
     function get_url()
     {
-        $uri = urldecode(
+        return urldecode(
             parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)
         );
-        return $uri;
     }
 }
 
@@ -21,10 +20,10 @@ if (!function_exists('clean_xss'))
     /**
      * Clean xss.
      *
-     * @param  string $str
+     * @param  string $string
      * @return string
      */
-    function clean_xss($str)
+    function clean_xss(String $string)
     {
         $xss = [
             '@<script&#91;^>]*?>.*?</script>@si',
@@ -32,9 +31,9 @@ if (!function_exists('clean_xss'))
             '@<style&#91;^>]*?>.*?</style>@siU',
             '@<!&#91;\s\S&#93;*?--&#91; \t\n\r&#93;*>@'
         ];
-        $base = ['../', './', '..\\', '.\\', '..'];
-        $str = str_replace($base, '', $str);
-        return strip_tags(trim( preg_replace($xss, '', $str) ));
+        $base   = ['../', './', '..\\', '.\\', '..'];
+        $string = str_replace($base, '', $string);
+        return strip_tags(trim( preg_replace($xss, '', $string) ));
     }
 }
 
@@ -79,7 +78,7 @@ if (!function_exists('redirect'))
      * @param  int    $time
      * @return void
      */
-    function redirect($url, $time = 0)
+    function redirect(String $url, $time = 0)
     {
         if (!strstr($url, URI)) exit;
         if (!headers_sent()) {
@@ -121,13 +120,13 @@ if (!function_exists('slug'))
         $replace = array('c', 's', 'g', 'u','u', 'i','i', 'o', 'o', 'c', 's', 'g', 'u', 'o', 'i');
         $slug    = str_replace($find, $replace, $slug);
         setlocale(LC_ALL, 'en_US.utf8');
-        $slug = preg_replace('/[`^~\'"]/', null, iconv('UTF-8', 'ASCII//TRANSLIT', $slug));
-        $slug = htmlentities($slug, ENT_QUOTES, 'UTF-8');
+        $slug    = preg_replace('/[`^~\'"]/', null, iconv('UTF-8', 'ASCII//TRANSLIT', $slug));
+        $slug    = htmlentities($slug, ENT_QUOTES, 'UTF-8');
         $pattern = '~&([a-z]{1,2})(?:acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i';
-        $slug = preg_replace($pattern, '$1', $slug);
-        $slug = html_entity_decode($slug, ENT_QUOTES, 'UTF-8');
+        $slug    = preg_replace($pattern, '$1', $slug);
+        $slug    = html_entity_decode($slug, ENT_QUOTES, 'UTF-8');
         $pattern = '~[^0-9a-z]+~i';
-        $slug = preg_replace($pattern, '-', $slug);
+        $slug    = preg_replace($pattern, '-', $slug);
         return strtolower(trim($slug, '-'));
     }
 }
@@ -138,7 +137,7 @@ if (!function_exists('pass'))
      * Create password encrypt.
      *
      * @param  mixed $str
-     * @return md5
+     * @return string md5
      */
     function pass($str)
     {
@@ -156,8 +155,7 @@ if (!function_exists('get_route'))
     function get_route()
     {
         if (isset($_GET["do"])) {
-            $route = array_filter(explode("/", clean($_GET["do"])));
-            return $route;
+            return array_filter(explode("/", clean($_GET["do"])));
         }
         return false;
     }
@@ -168,19 +166,19 @@ if (!function_exists('file_check'))
     /**
      * Check file type.
      *
-     * @param  string  $str
+     * @param  string  $string
      * @return boolean
      */
-    function file_check($str)
+    function file_check(String $string)
     {
-        if ($str == ".") return false;
-        if ($str == "..") return false;
-        if ($str == "../") return false;
-        if ($str == "./") return false;
-        if ($str == ".\\") return false;
-        if ($str == "..\\") return false;
-        if ($str == ".gitkeep") return false;
-        if ($str == ".gitignore") return false;
+        if ($string == ".") return false;
+        if ($string == "..") return false;
+        if ($string == "../") return false;
+        if ($string == "./") return false;
+        if ($string == ".\\") return false;
+        if ($string == "..\\") return false;
+        if ($string == ".gitkeep") return false;
+        if ($string == ".gitignore") return false;
         return true;
     }
 }
@@ -190,11 +188,11 @@ if (!function_exists('set_cache_name'))
     /**
      * Set cache file name.
      *
-     * @param  mixed  $param
      * @param  string $name
+     * @param  mixed  $param
      * @return string
      */
-    function set_cache_name($name, $param)
+    function set_cache_name(String $name, $param)
     {
         if (is_array($param)) {
             $latest = implode(',', $param);
@@ -233,7 +231,7 @@ if (!function_exists('error_handler'))
      * @param  int    $line
      * @return void
      */
-    function error_handler($code, $msg, $file, $line)
+    function error_handler(Int $code, String $msg, String $file, Int $line)
     {
         Ataworks\Exceptions\Handler::report($code, $msg, $file, $line);
     }
@@ -247,7 +245,7 @@ if (!function_exists('exception_handler'))
      * @param  array $e
      * @return void
      */
-    function exception_handler($e)
+    function exception_handler(Array $e)
     {
         Ataworks\Exceptions\Handler::report($e->getCode(), $e->getMessage(), $e->getFile(), $e->getLine());
     }
@@ -280,7 +278,7 @@ if (!function_exists('pagination'))
      * @param  string $url
      * @return string
      */
-    function pagination($pages, $active, $url)
+    function pagination(Int $pages, Int $active, String $url)
     {
         return Ataworks\Helpers\Pagination::getContent($pages, $active, $url);
     }
@@ -294,7 +292,7 @@ if (!function_exists('add_file_with_ver'))
      * @param  string $file
      * @return string
      */
-    function add_file_with_ver($file)
+    function add_file_with_ver(String $file)
     {
         if (is_admin_folder()) {
             $ver = filemtime(ADMIN_VIEW.$file);
@@ -310,7 +308,7 @@ if(!function_exists('create_dp_url'))
     /**
      * Create url for admin home page.
      *
-     * @param  string $url
+     * @param  string|null $url
      * @return string
      */
     function create_dp_url($url = null)
@@ -330,7 +328,7 @@ if (!function_exists('add_slash'))
      * @param  string $word
      * @return string
      */
-    function add_slash($word)
+    function add_slash(String $word)
     {
         return rtrim($word, '/') . '/';
     }
@@ -343,7 +341,7 @@ if (!function_exists('remove_dir'))
      *
      * @param  string  $dir
      */
-    function remove_dir($dir)
+    function remove_dir(String $dir)
     {
         if (is_dir($dir)) {
             $objects = scandir($dir);
@@ -371,7 +369,7 @@ if (!function_exists('copy_dir'))
      * @param string $src
      * @param string $dst
      */
-    function copy_dir($src, $dst)
+    function copy_dir(String $src, String $dst)
     {
         if (is_dir($src)) {
             if (!is_dir($dst)) mkdir($dst);
@@ -397,7 +395,7 @@ if (!function_exists('is_email'))
      * @param  string  $str
      * @return boolean
      */
-    function is_email($str)
+    function is_email(String $str)
     {
         if (filter_var($str, FILTER_VALIDATE_EMAIL)) {
             return true;
@@ -441,23 +439,27 @@ if (!function_exists('is_phone'))
      * Check phone number for turkey.
      * Note: at the beginning without zero.
      *
-     * @example is_phone('507 000 00 00') or is_phone('507000000')
-     * @param int $number
+     * @example is_phone('501 000 00 00') or is_phone('501000000')
+     * @example is_phone('0501 000 00 00')
+     * @param  int|string $number
      * @return boolean
      */
     function is_phone($number)
     {
+        /* Dec out */
+        $number = decoct($number);
+
         /* Parse blanks */
         $number = str_replace(' ', '', $number);
 
         /* Check numeric */
         if (!is_numeric($number)) return false;
 
-        /* Check strlen */
+        /* Check length */
         if (strlen($number) != 10) return false;
 
         /* Check valid number */
-        if ($number <= 5050000000 || $number >= 5499999999) return false;
+        if ($number <= 5010000000 || $number >= 5559999999) return false;
 
         return true;
     }
@@ -471,7 +473,7 @@ if (!function_exists('get_theme_config'))
      * @param  string $key
      * @return string
      */
-    function get_theme_config($key)
+    function get_theme_config(String $key)
     {
         if (file_exists(THEME_DIR.'customize.json')) {
             /* Get file content */
@@ -529,4 +531,3 @@ if (!function_exists('reading_time'))
         return "$hour " . __('hour');
     }
 }
-

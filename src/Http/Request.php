@@ -21,10 +21,7 @@ class Request implements IRequest
      */
     public static function requestUri() : String
     {
-        $uri = urldecode(
-            parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)
-        );
-        return $uri;
+        return get_url();
     }
 
     /**
@@ -40,7 +37,7 @@ class Request implements IRequest
     /**
      * Post method
      *
-     * @param  string $key
+     * @param  string|null $key
      * @param  mixed  $value
      * @return mixed
      */
@@ -54,7 +51,7 @@ class Request implements IRequest
     /**
      * Get method
      *
-     * @param  string $key
+     * @param  string|null $key
      * @param  mixed  $value
      * @return mixed
      */
@@ -68,7 +65,7 @@ class Request implements IRequest
     /**
      * Env method
      *
-     * @param  string $key
+     * @param  string|null $key
      * @param  mixed  $value
      * @return mixed
      */
@@ -97,7 +94,7 @@ class Request implements IRequest
     /**
      * Request method
      *
-     * @param  string $key
+     * @param  string|null $key
      * @param  mixed  $value
      * @return mixed
      */
@@ -111,7 +108,7 @@ class Request implements IRequest
     /**
      * Return files
      *
-     * @param  string $name
+     * @param  string|null $name
      * @param  string $type
      * @return mixed
      */
