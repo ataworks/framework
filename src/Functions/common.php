@@ -392,15 +392,19 @@ if (!function_exists('is_email'))
     /**
      * Check email
      *
-     * @param  string  $str
+     * @param  string  $email
      * @return boolean
      */
-    function is_email(String $str)
+    function is_email(String $email)
     {
-        if (filter_var($str, FILTER_VALIDATE_EMAIL)) {
+        if (!preg_match('/[a-z||0-9]@[a-z||0-9].[a-z]/', $email)){
+            return false;
+        }
+
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
             return true;
         }
-        return  false;
+        return false;
     }
 }
 
