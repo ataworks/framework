@@ -228,6 +228,7 @@ class Db extends PDO implements IDb
         if ($this->cache === true) {
             /* Set cache file name */
             $cache = set_cache_name($sql, $values);
+
             if (Cache::queryCheck($cache, $this->cacheTime)) return Cache::getQuery($cache);
         }
 
@@ -356,7 +357,7 @@ class Db extends PDO implements IDb
         $sql = "SELECT {$cols} FROM ".$this->prefix.$table." ".$joinTables." ON {$where} ORDER BY $order_by LIMIT $limit";
 
         /* Set cache file name */
-        $cache = set_cache_name($sql, $where);
+        $cache = set_cache_name($sql, $values);
 
         /* Check cache on/off */
         if ($this->cache === true) {
