@@ -378,9 +378,9 @@ class Db extends PDO implements IDb
          */
         if ($sth->rowCount() > 0) {
             if ($single == true) {
-                $data = $sth->fetch();
+                $data = $sth->fetch(PDO::FETCH_ASSOC);
             } else {
-                $data = $sth->fetchAll();
+                $data = $sth->fetchAll(PDO::FETCH_ASSOC);
             }
             if ($this->cache === true) Cache::setQuery($cache, $data);
             return $data;
