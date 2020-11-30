@@ -63,9 +63,19 @@ final class Router implements IRouter
 
             $route = clean(array_filter(explode("/", trim( Request::get('do') ))));
             $file  = $this->type.mb_strtolower($route[0]).".php";
+            $static= $this->type.'static/'.mb_strtolower($route[0]).".php";
 
             /* Check controller file */
             if (file_exists($file)) {
+                /**
+                 * Set controller type
+                 * Type for standart controller
+                 */
+                $this->route['type'] = "";
+
+                /* Set standart controller route block for goto function */
+                normRoute:
+
                 /* Set controller */
                 $this->route["cont"] = $route[0];
 
@@ -82,6 +92,15 @@ final class Router implements IRouter
                     $this->route["method"] = "index";
                 }
 
+            } elseif(file_exists($static)) {
+                /**
+                 * Set controller type
+                 * Type for static controller
+                 */
+                $this->route['type'] = 'static/';
+
+                /* Goto standart controller block */
+                goto normRoute;
             } else {
                 /* Error method */
                 $this->error();
@@ -103,7 +122,7 @@ final class Router implements IRouter
     {
         if (isset($params)) {
             /* Import controller file */
-            require_once($this->type.mb_strtolower($params['cont']).".php");
+            require_once($this->type.$params['type'].mb_strtolower($params['cont']).".php");
 
             /* Set controller */
             $controller = $params['cont'];
