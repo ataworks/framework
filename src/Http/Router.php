@@ -61,21 +61,12 @@ final class Router implements IRouter
 
         } else {
 
-            $route = clean(array_filter(explode("/", trim( Request::get('do') ))));
-            $file  = $this->type.mb_strtolower($route[0]).".php";
-            $static= $this->type.'static/'.mb_strtolower($route[0]).".php";
+            $route  = clean(array_filter(explode("/", trim( Request::get('do') ))));
+            $file   = $this->type.mb_strtolower($route[0]).".php";
+            $static = $this->type.'static/'.mb_strtolower($route[0]).".php";
 
             /* Check controller file */
-            if (file_exists($file)) {
-                /**
-                 * Set controller type
-                 * Type for standart controller
-                 */
-                $this->route['type'] = "";
-
-                /* Set standart controller route block for goto function */
-                normRoute:
-
+            if (file_exists($file) || file_exists($static)) {
                 /* Set controller */
                 $this->route["cont"] = $route[0];
 
@@ -92,15 +83,6 @@ final class Router implements IRouter
                     $this->route["method"] = "index";
                 }
 
-            } elseif(file_exists($static)) {
-                /**
-                 * Set controller type
-                 * Type for static controller
-                 */
-                $this->route['type'] = 'static/';
-
-                /* Goto standart controller block */
-                goto normRoute;
             } else {
                 /* Error method */
                 $this->error();
@@ -121,8 +103,13 @@ final class Router implements IRouter
     private function run(Array $params = [])
     {
         if (isset($params)) {
+            /* Set controller files */
+            $file   = mb_strtolower($params['cont']).".php";
+            $static = 'static/'.mb_strtolower($params['cont']).".php";
+
             /* Import controller file */
-            require_once($this->type.$params['type'].mb_strtolower($params['cont']).".php");
+            if (file_exists($this->type.$file)) require_once($this->type.$file);
+            if (file_exists($this->type.$static)) require_once($this->type.$static);
 
             /* Set controller */
             $controller = $params['cont'];
