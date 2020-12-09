@@ -45,6 +45,17 @@ class View implements IView
         $data['CDNFontAwesomeList'] = CDN::fontAwesomeList();
 
         /* Render */
-        echo $twig->render("template/$path.twig", $data);
+        if (file_exists($viewDir."template/$path.twig")) {
+            echo $twig->render("template/$path.twig", $data);
+        } elseif(file_exists($viewDir."template/static/$path.twig")) {
+            echo $twig->render("template/static/$path.twig", $data);
+        } else {
+            /* Set message */
+            $msg = "$path.twig file is not found!";
+
+            /* Add error log and exit */
+            Logger::addErrorLog(E_WARNING, $msg, "", 0);
+            exit($msg);
+        }
     }
 }
