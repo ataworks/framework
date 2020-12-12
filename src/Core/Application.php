@@ -29,7 +29,6 @@ class Application
         /* Framework version */
         define('FW_VERSION', $this->version());
 
-        /* Start handler class */
         new \Ataworks\Exceptions\Handler(new Logger());
 
         /**
@@ -81,7 +80,6 @@ class Application
                 Registry::get("Ataworks\Core\Db")->setLog(true);
                 Registry::get("Ataworks\Core\Db")->cache(false);
 
-                /* Set lang code */
                 $lang = $lang['code'];
             } else {
                 /* Check language data */
@@ -109,14 +107,15 @@ class Application
         }
 
         /* Start twig */
-        $twig   = Registry::set("Twig", new \Twig\Environment($loader, $twigConfig));
+        $twig = Registry::set("Twig", new \Twig\Environment($loader, $twigConfig));
 
         /* Start system twig functions */
         $functions = new \Ataworks\Helpers\TwigFunctions();
         $functions = $functions->getFunctions();
 
         /* Add twig function */
-        foreach ($functions as $function) {
+        foreach ($functions as $function)
+        {
             $twig->addFunction($function);
         }
 
@@ -125,11 +124,11 @@ class Application
         $functions = $functions->getFunctions();
 
         /* Add twig function */
-        foreach ($functions as $function) {
+        foreach ($functions as $function)
+        {
             $twig->addFunction($function);
         }
 
-        /* Unset variables */
         unset($loader, $twig, $functions, $lang);
 
         /**
@@ -144,7 +143,6 @@ class Application
             exit(View::render('maintenance'));
         }
 
-        /* Start Default Rewrite */
         new \App\Http\Rewrite();
 
         /* Start Rewrite and set for registry class */

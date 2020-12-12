@@ -25,26 +25,19 @@ abstract class Controller implements IController
     {
         /* Check model type */
         if (is_admin_folder()) {
-            /* Set class name */
             $class = "\\Backend\\Models\\$model";
 
-            /* Check file */
             $file   = ADMIN_MODELS."$model.php";
             $static = ADMIN_MODELS."static/$model.php";
 
-            /* Import model file */
             if (file_exists($file)) require $file;
             if (file_exists($static)) require $static;
 
         } else {
-            /* Set class name */
             $class = "\\Frontend\\Models\\$model";
-
-            /* Import model file */
             require MODELS."$model.php";
         }
 
-        /* Return model file */
         return Registry::set($class, new $class);
     }
 

@@ -48,7 +48,7 @@ class Cookie implements ICookie
      * Update session time
      *
      * @param  int $time
-     * @return mixed
+     * @return bool|string
      */
     public function time(Int $time)
     {
@@ -63,7 +63,7 @@ class Cookie implements ICookie
      * Update session domain
      *
      * @param  string $domain
-     * @return mixed
+     * @return bool|string
      */
     public function domain(String $domain)
     {
@@ -78,7 +78,7 @@ class Cookie implements ICookie
      * Update session path
      *
      * @param  string $path
-     * @return mixed
+     * @return bool|string
      */
     public function path(String $path)
     {
@@ -93,7 +93,7 @@ class Cookie implements ICookie
      * Update session secure
      *
      * @param  string $secure
-     * @return mixed
+     * @return bool|string
      */
     public function secure(String $secure)
     {
@@ -107,17 +107,14 @@ class Cookie implements ICookie
     /**
      * Set cookie
      *
-     * @param  string   $name
-     * @param  mixed    $value
-     * @param  int      $time
+     * @param  string    $name
+     * @param  mixed     $value
+     * @param  int |null $time
      * @return boolean
      */
     public function set(String $name, $value, Int $time = null) : Bool
     {
-        /* Check time */
         if (!empty($time)) $this->time($time);
-
-        /* Get cookie config */
         $Config = CONFIG['cookie'];
 
         /* Cookie config */
@@ -126,7 +123,6 @@ class Cookie implements ICookie
         if (empty($this->path))     $this->path     = $Config['path'];
         if (empty($this->secure))   $this->secure   = $Config['secure'];
 
-        /* Set cookie */
         if (setcookie($name, $value, time() + $this->time, $this->path, $this->domain, $this->secure)) {
             return true;
         }
@@ -138,7 +134,7 @@ class Cookie implements ICookie
      * Return cookie value
      *
      * @param  string $name
-     * @return mixed
+     * @return bool|string
      */
     public function get(String $name)
     {
@@ -170,7 +166,6 @@ class Cookie implements ICookie
      */
     public function delete(String $name, String $path = null) : Bool
     {
-        /* Get cookie config */
         $Config = CONFIG['cookie'];
 
         /* Check $path param */
@@ -191,15 +186,13 @@ class Cookie implements ICookie
      *
      * @return boolean
      */
-    public function deleteAll()
+    public function deleteAll() : bool
     {
-        /* Get cookie config */
         $Config = CONFIG['cookie'];
-
-        /* Set path */
         $path = $Config['path'];
 
-        if (!empty($_COOKIE)) {
+        if (!empty($_COOKIE))
+        {
             foreach ($_COOKIE as $key => $value)
             {
                 setcookie($key, '', time() - 1, $path);

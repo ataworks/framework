@@ -24,7 +24,6 @@ class View implements IView
      */
     public static function render(String $path, $data = [])
     {
-        /* Get twig */
         $twig = Registry::get('Twig');
 
         /* Check theme path for import theme functions */
@@ -50,7 +49,6 @@ class View implements IView
         } elseif(file_exists($viewDir."template/static/$path.twig")) {
             echo $twig->render("template/static/$path.twig", $data);
         } else {
-            /* Set message */
             $msg = "$path.twig file is not found!";
 
             /* Add error log and exit */

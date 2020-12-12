@@ -7,7 +7,7 @@ use App\Helpers\Dashboard\Content;
 use App\Helpers\Content\Head;
 use Twig\TwigFunction;
 
-class TwigFunctions
+class TwigFunctions implements ITwigFunctions
 {
     /**
      * Keep twig functions

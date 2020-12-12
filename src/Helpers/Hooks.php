@@ -47,7 +47,6 @@ class Hooks implements IHooks
      */
     public static function loadPlugins(String $dir = null)
     {
-        /* Empty dir */
         if (empty($dir)) $dir = self::PLUGIN_DIR;
 
         /* Check plugins home dir */
@@ -86,7 +85,6 @@ class Hooks implements IHooks
             }
         }
 
-        /* Default hooks */
         self::defaultHooks();
     }
 
@@ -125,17 +123,11 @@ class Hooks implements IHooks
 
         /* Check plugin dir */
         if (is_dir($file)) {
-            /* Set plugin json */
-            $json = $file."/$plugin.json";
-
-            /* Json open */
-            $file = file_get_contents($json);
+            $json    = $file."/$plugin.json";
+            $file    = file_get_contents($json);
             $pStatus = Json::decodeArray($file)['status'];
+            $file    = str_replace('"status":"'.$pStatus.'"', '"status":"'.$status.'"', $file);
 
-            /* Replace */
-            $file = str_replace('"status":"'.$pStatus.'"', '"status":"'.$status.'"', $file);
-
-            /* File put contents */
             file_put_contents($json, $file);
         }
     }

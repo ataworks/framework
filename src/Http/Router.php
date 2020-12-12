@@ -42,7 +42,8 @@ final class Router implements IRouter
         /* Router type */
         if (isset($type)) {
 
-            switch ($type) {
+            switch ($type)
+            {
                 case true:
                     $this->type = ADMIN_CONTROLLERS;
                     break;
@@ -67,17 +68,12 @@ final class Router implements IRouter
 
             /* Check controller file */
             if (file_exists($file) || file_exists($static)) {
-                /* Set controller */
                 $this->route["cont"] = $route[0];
 
                 /* Check method */
                 if (isset($route[1])) {
-                    /* Set method */
                     $this->route["method"] = $route[1];
-
-                    /* Check parameter */
                     if (isset($route[2])) $this->route["params"] = $route[2];
-
                 } else {
                     /* Go to default method */
                     $this->route["method"] = "index";
@@ -90,7 +86,6 @@ final class Router implements IRouter
 
         }
 
-        /* Run controller */
         $this->run($this->route);
     }
 
@@ -103,15 +98,12 @@ final class Router implements IRouter
     private function run(Array $params = [])
     {
         if (isset($params)) {
-            /* Set controller files */
             $file   = mb_strtolower($params['cont']).".php";
             $static = 'static/'.mb_strtolower($params['cont']).".php";
 
-            /* Import controller file */
             if (file_exists($this->type.$file)) require_once($this->type.$file);
             if (file_exists($this->type.$static)) require_once($this->type.$static);
 
-            /* Set controller */
             $controller = $params['cont'];
 
             /* Set controller type */
@@ -156,9 +148,7 @@ final class Router implements IRouter
      */
     private function error()
     {
-        /* Redirect error page */
-        redirect_err();
-        exit;
+        exit(redirect_err());
     }
 
     /**

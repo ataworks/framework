@@ -40,7 +40,6 @@ abstract class Model
      */
     public function __construct()
     {
-        /* Set instance */
         $this->db = Registry::get('Ataworks\Core\Db');
 
         /* Set current language id */

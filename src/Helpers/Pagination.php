@@ -47,11 +47,8 @@ class Pagination implements IPagination
      */
     public static function getLimit(Int $element) : String
     {
-        /* Set limit */
         $limit = self::$limit;
-
-        /* Get page number */
-        $page = self::getPage();
+        $page  = self::getPage();
 
         /* Check page number */
         $allPage = self::getTotal($element);
@@ -158,7 +155,7 @@ class Pagination implements IPagination
      * @param int $current
      * @return array
      */
-    public static function getPageNumbers(Int $pages, Int $current)
+    public static function getPageNumbers(Int $pages, Int $current) : array
     {
         /* Array for data */
         $data = [];

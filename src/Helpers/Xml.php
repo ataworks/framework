@@ -18,7 +18,7 @@ class Xml
      * @param  array  $data
      * @param  string $nodeName
      * @param  mixed  $xml
-     * @return xml
+     * @return string|xml
      */
     public function convertXml(Array $data = [], String $nodeName = 'data', $xml = null)
     {
@@ -26,7 +26,8 @@ class Xml
             $xml = simplexml_load_string("<?xml version='1.0' encoding='UTF-8'?><$nodeName />");
         }
 
-        foreach ($data as $key => $val) {
+        foreach ($data as $key => $val)
+        {
             if (is_numeric($key))    $key = "item_" . (string) $key;
             $key = preg_replace('/[^a-z]/i', '', $key);
 

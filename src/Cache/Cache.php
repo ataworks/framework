@@ -43,18 +43,15 @@ class Cache implements ICache
     /**
      * Check whether the query is being cached.
      *
-     * @param  string $sql
-     * @param  int    $cacheTime
+     * @param  string   $sql
+     * @param  int|null $cacheTime
      * @return boolean
      */
     public static function queryCheck(String $sql, Int $cacheTime = null) : Bool
     {
         if (isset($cacheTime)) self::$delay = $cacheTime;
 
-        /* Create cache file name */
         $file = self::$queryDir.md5($sql).'.cache';
-
-        /* Time format */
         $time = date("Ymdhis");
 
         /**
@@ -80,7 +77,6 @@ class Cache implements ICache
      */
     public static function setQuery(String $sql, Array $data = [])
     {
-        /* Create cache file name */
         $file = self::$queryDir.md5($sql).'.cache';
 
         /* Check cache file */
@@ -106,7 +102,7 @@ class Cache implements ICache
      * @param  string $sql
      * @return array
      */
-    public static function getQuery(String $sql) : Array
+    public static function getQuery(String $sql) : array
     {
         $file = self::$queryDir.md5($sql).'.cache';
 
@@ -126,7 +122,6 @@ class Cache implements ICache
      */
     public static function clear()
     {
-        /* Clear query cache */
         self::clearQuery();
 
         /* Clear template cache */

@@ -28,7 +28,6 @@ final class Session implements ISession
      */
     public static function init()
     {
-        /* Turn on output buffering and start session */
         ob_start();
         session_start();
 

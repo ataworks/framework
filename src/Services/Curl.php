@@ -65,7 +65,6 @@ class Curl implements ICurl
         if (!is_resource($this->init)) return false;
         curl_setopt_array($this->init, $this->options);
 
-        /* Reset Options */
         $this->options = [
             //
         ];

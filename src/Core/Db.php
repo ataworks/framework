@@ -74,7 +74,6 @@ class Db extends PDO implements IDb
      */
     public function __construct(String $type, String $server, String $dbname, String $user, String $pass, String $prefix)
     {
-        /* Set $prefix */
         $this->prefix = $prefix;
 
         /**
@@ -108,10 +107,7 @@ class Db extends PDO implements IDb
             exit($error);
         }
 
-        /* Set the database charset */
         $this->exec("SET NAMES UTF8");
-
-        /* Set pdo attribute mode */
         $this->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
     }
 
@@ -271,7 +267,6 @@ class Db extends PDO implements IDb
 
         $sql = "SELECT $cols FROM ".$this->prefix.$table." WHERE $where ORDER BY $order_by";
 
-        /* Set cache file name */
         $cache = set_cache_name($sql, $values);
 
         /* Check cache on/off */
@@ -353,10 +348,8 @@ class Db extends PDO implements IDb
         /* Check order by */
         if (empty($order_by)) $order_by = $this->prefix.$table.".id DESC";
 
-        /* Set sql */
         $sql = "SELECT {$cols} FROM ".$this->prefix.$table." ".$joinTables." ON {$where} ORDER BY $order_by LIMIT $limit";
 
-        /* Set cache file name */
         $cache = set_cache_name($sql, $values);
 
         /* Check cache on/off */
@@ -419,10 +412,7 @@ class Db extends PDO implements IDb
      */
     public function search(String $table, String $cols, $where, $values,  $limit = 120, String $order_by = 'DESC')
     {
-        /* Set sql */
         $sql = "SELECT $cols FROM ".$this->prefix.$table." WHERE ".$where." LIKE :q ORDER BY id $order_by LIMIT $limit";
-
-        /* Set cache file name */
         $cache = set_cache_name($sql, $values);
         if (Cache::queryCheck($cache)) return Cache::getQuery($cache);
 
@@ -455,14 +445,12 @@ class Db extends PDO implements IDb
      */
     private function convertCols($param) : String
     {
-        /* Reset */
         $this->cols = "";
-
-        /* Explode $param */
         $var = explode(",", trim($param));
 
         /* Array append to $this->cols */
-        foreach ($var as $key) {
+        foreach ($var as $key)
+        {
             $this->cols = $this->cols.', '.$key.' = ?';
             $this->cols = ltrim($this->cols, ",");
         }
@@ -477,7 +465,6 @@ class Db extends PDO implements IDb
      */
     private function convertValues($values) : array
     {
-        /* Reset values */
         $this->values = [
             //
         ];
@@ -491,9 +478,9 @@ class Db extends PDO implements IDb
             return $this->values;
         }
 
-        /* Parameter to array */
         $var = explode(",", trim($values));
-        foreach ($var as $key) {
+        foreach ($var as $key)
+        {
             array_push($this->values, $key);
         }
         return $this->values;

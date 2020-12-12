@@ -60,14 +60,9 @@ class Logger implements ILogger
      */
     public static function addErrorLog($code, String $msg, String $filePath, Int $line)
     {
-        /* Get config */
         $Config = CONFIG;
-
-        /* Keep error log file */
-        $file = self::$path.'error.log';
-
-        /* Get url */
-        $url = get_url();
+        $file   = self::$path.'error.log';
+        $url    = get_url();
 
         /* Create log message */
         $logMessage = date(self::$timeFormat).' '.self::$levels[$code].": message => $msg file $filePath line => $line url => $url\r\n";
@@ -130,14 +125,9 @@ class Logger implements ILogger
      */
     public static function addAccountLog(String $msg, String $name)
     {
-        /* Get config */
         $Config = CONFIG;
-
-        /* Keep error log file */
-        $file = self::$path.'account.log';
-
-        /* Get url */
-        $url = get_url();
+        $file   = self::$path.'account.log';
+        $url    = get_url();
 
         /* Create log message */
         $logMessage = date(self::$timeFormat)." result_code => $msg UserName|Email => ".$name." IP => ".get_ip()." url => $url user => ".Session::get('uname')."\r\n";
@@ -161,7 +151,6 @@ class Logger implements ILogger
      */
     public static function filePuts(String $file, $data)
     {
-        /* Appending for file open */
         $f = fopen($file, "a");
         fputs($f, $data);
         fclose($f);
@@ -176,10 +165,7 @@ class Logger implements ILogger
      */
     public static function fileWrite(String $file, $data)
     {
-        /* Create file */
         touch($file);
-
-        /* Write for file open */
         $f = fopen($file, "w");
         fwrite($f, $data);
         fclose($f);

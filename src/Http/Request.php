@@ -39,7 +39,7 @@ class Request implements IRequest
      *
      * @param  string|null $key
      * @param  mixed  $value
-     * @return mixed
+     * @return bool|string
      */
     public static function post(String $key = null, $value = null)
     {
@@ -53,7 +53,7 @@ class Request implements IRequest
      *
      * @param  string|null $key
      * @param  mixed  $value
-     * @return mixed
+     * @return bool|string
      */
     public static function get(String $key = null, $value = null)
     {
@@ -67,7 +67,7 @@ class Request implements IRequest
      *
      * @param  string|null $key
      * @param  mixed  $value
-     * @return mixed
+     * @return bool|string
      */
     public static function env(String $key = null, $value = null)
     {
@@ -81,7 +81,7 @@ class Request implements IRequest
      *
      * @param  string $key
      * @param  mixed  $value
-     * @return mixed
+     * @return bool|string
      */
     public static function server(String $key = '', $value = null)
     {
@@ -96,7 +96,7 @@ class Request implements IRequest
      *
      * @param  string|null $key
      * @param  mixed  $value
-     * @return mixed
+     * @return bool|string
      */
     public static function request(String $key = null, $value = null)
     {
@@ -110,9 +110,9 @@ class Request implements IRequest
      *
      * @param  string|null $name
      * @param  string $type
-     * @return mixed
+     * @return string
      */
-    public static function files(String $name = null, String $type = 'name')
+    public static function files(String $name = null, String $type = 'name') : String
     {
         return $_FILES[$name][$type];
     }

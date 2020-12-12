@@ -30,10 +30,7 @@ class Rewrite implements IRewrite
      */
     public function __construct()
     {
-        /* Get rules */
         $rules = $this->get();
-
-        /* Format url */
         $uri = ltrim(get_url(), '/');
 
         /* Check for loop */

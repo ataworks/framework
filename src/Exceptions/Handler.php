@@ -34,10 +34,7 @@ class Handler
      */
     public static function report(Int $code, String $msg, String $file, Int $line)
     {
-        /* Add new error log */
         self::$instance->addErrorLog($code, $msg, $file, $line);
-
-        /* Print error */
         self::printError($code, $msg, $file, $line);
     }
 
@@ -52,7 +49,6 @@ class Handler
      */
     public static function printError($code, String $msg, String $file, Int $line)
     {
-        /* Get config */
         $Config = CONFIG;
 
         /* Check error mode */
@@ -78,8 +74,6 @@ class Handler
         }
     </style>
 <?php
-
-        /* Error message */
         echo ("<div class='error-bubble'><span>"
         . "<b>" . $code . ":</b> " . $msg . ' File: ' . $file . ' on line ' . $line . "</span></div>");
     }
