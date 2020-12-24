@@ -448,11 +448,8 @@ if (!function_exists('is_phone'))
      * @param  int|string $number
      * @return boolean
      */
-    function is_phone($number)
+    function is_phone($number) : bool
     {
-        /* Dec out */
-        $number = decoct($number);
-
         /* Parse blanks */
         $number = str_replace(' ', '', $number);
 

@@ -17,7 +17,7 @@ class Application
      *
      * @var string
      */
-    const FW_VERSION = '1.2.0';
+    const FW_VERSION = '1.1.6';
 
     /**
      * Main Method.

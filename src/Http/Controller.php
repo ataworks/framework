@@ -35,7 +35,12 @@ abstract class Controller implements IController
 
         } else {
             $class = "\\Frontend\\Models\\$model";
-            require MODELS."$model.php";
+
+            $file   = MODELS."$model.php";
+            $static = MODELS."static/$model.php";
+
+            if (file_exists($file)) require $file;
+            if (file_exists($static)) require $static;
         }
 
         return Registry::set($class, new $class);
