@@ -23,7 +23,7 @@ class Pagination implements IPagination
 
     /**
      * Keep presentation limit
-     * 
+     *
      * @var int presentation
      */
     public static $presentation = 9;
@@ -89,19 +89,24 @@ class Pagination implements IPagination
     {
         /* Check page number */
         if (ceil($totalElement / self::$limit) > 1) {
-            /* Start create content */
-            $content = "
-            <li>
-              <a href=\"$url\" title=\"".__('first_page')."\">
-                <i class=\"fas fa-step-backward\"></i>
-              </a>
-            </li>";
+            $content = "";
+
+            /* Check total element */
+            if (true) {
+                /* Start create content */
+                $content = "
+                <li class='page-item previous'>
+                  <a href=\"$url\" title=\"".__('first_page')."\" class='page-link'>
+                    <i class='fas fa-step-backward'></i>
+                  </a>
+                </li>";
+            }
 
             /**
              * Start loop.
              *
              * Loops up to the number of pages.
-             * And append to content. 
+             * And append to content.
              */
             foreach (self::getPageNumbers($totalElement, $active) as $row)
             {
@@ -114,21 +119,24 @@ class Pagination implements IPagination
 
                 /* Add to content */
                 $content .= "
-                <li>
-                  <a class=\"$class\" href=\"$url&page=$row\" title=\"".__('page')." $row\">
+                <li class='page-item $class'>
+                  <a class='page-link' href=\"$url&page=$row\" title=\"".__('page')." $row\">
                     <span>$row</span>
                   </a>
                 </li>";
                 $class = "";
             }
 
-            /* Add last page to content */
-            $content .= "
-            <li>
-              <a href=\"$url&page=".ceil($totalElement / self::$limit)."\" title=\"".__('last_page')."\">
-                <i class=\"fas fa-step-forward\"></i>
-              </a>
-            </li>";
+            /* Check total element */
+            if (true) {
+                /* Add last page to content */
+                $content .= "
+                <li class='page-item next'>
+                  <a href=\"$url&page=".ceil($totalElement / self::$limit)."\" title=\"".__('last_page')."\" class='page-link'>
+                    <i class='fas fa-step-forward'></i>
+                  </a>
+                </li>";
+            }
 
             /* Return ready content */
             return $content;
@@ -162,7 +170,7 @@ class Pagination implements IPagination
 
         /* Set presentation link */
         $adj = self::$presentation;
-        
+
         if (isset($pages, self::$limit) === true)
         {
             $data = range(1, ceil($pages / self::$limit));
